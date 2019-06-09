@@ -15,6 +15,10 @@ public:
 protected:
 	void Error(bool resetLua, const char* errFmt, ...);
 public:
-	void StackDump();
 	void CallLuaFunction(const char* func, const char* argSig, int resNum, ...);
+
+#ifdef _DEBUG
+public:
+	void StackDump();
+#endif
 };

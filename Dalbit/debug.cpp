@@ -1,4 +1,9 @@
+
+
 #include "pch.h"
+
+#ifdef _DEBUG
+
 #include "framework.h"
 #include "Dalbit.h"
 #include "../Lua53/lua.hpp"
@@ -33,18 +38,4 @@ void dalbit::StackDump()
 	}
 }
 
-
-void dalbit::Error(bool resetLua, const char* errFmt, ...)
-{
-	va_list vl;
-	va_start(vl, errFmt);
-	vfprintf(stderr, errFmt, vl);
-	va_end(vl);
-
-	if (resetLua)
-	{
-		fprintf(stdout, "Resetting Lua...");
-		dalbit::~dalbit();
-		dalbit();
-	}
-}
+#endif

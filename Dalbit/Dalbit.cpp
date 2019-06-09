@@ -6,6 +6,21 @@
 #include "Dalbit.h"
 #include "../Lua53/lua.hpp"
 
+void dalbit::Error(bool resetLua, const char* errFmt, ...)
+{
+	va_list vl;
+	va_start(vl, errFmt);
+	vfprintf(stderr, errFmt, vl);
+	va_end(vl);
+
+	if (resetLua)
+	{
+		fprintf(stdout, "Resetting Lua...");
+		dalbit::~dalbit();
+		dalbit();
+	}
+}
+
 const lua_State* dalbit::GetState()
 {
 	return L;
