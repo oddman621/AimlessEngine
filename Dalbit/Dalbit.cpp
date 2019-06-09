@@ -6,7 +6,16 @@
 #include "Dalbit.h"
 #include "../Lua53/lua.hpp"
 
-void dalbit::StackDump()
-{
 
+using namespace std;
+
+dalbit::dalbit()
+{
+	L = luaL_newstate();
+	luaL_openlibs(L);
+}
+
+dalbit::~dalbit()
+{
+	lua_close(L);
 }

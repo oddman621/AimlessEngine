@@ -3,7 +3,11 @@
 class dalbit
 {
 private:
-	class lua_State* L;
+	struct lua_State* L;
+public:
+	dalbit();
+	virtual ~dalbit();
+
 public:
 	void StackDump();
 };
