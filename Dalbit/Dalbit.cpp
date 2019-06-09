@@ -98,7 +98,7 @@ void dalbit::CallLuaFunction(const char* func, const char* argSig, int resNum, .
 			*va_arg(vl, bool*) = lua_toboolean(L, -i);
 			break;
 		case LUA_TSTRING:
-			va_arg(vl, const char*) = lua_tostring(L, -i);
+			*va_arg(vl, const char**) = lua_tostring(L, -i);
 			break;
 		}
 	}
