@@ -6,66 +6,34 @@
 #include "Dalbit.h"
 #include "../Lua53/lua.hpp"
 
-void dalbit::Error(bool resetLua, const char* errFmt, ...)
-{
-	va_list vl;
-	va_start(vl, errFmt);
-	vfprintf(stderr, errFmt, vl);
-	va_end(vl);
+#include <iostream>
 
-	if (resetLua)
-	{
-		fprintf(stdout, "Resetting Lua...");
-		dalbit::~dalbit();
-		dalbit();
-	}
+int l_err(lua_State* L)
+{
+	fprintf(stderr, "[lua:%s] %s\n", lua_tostring(L, 0), lua_tostring(L, 1)); // Last Error
+	return 0;
 }
 
-const lua_State* dalbit::GetState()
-{
-	return L;
-}
-
-dalbit::dalbit()
-{
-	L = luaL_newstate();
-	luaL_openlibs(L);
-}
-
-dalbit::dalbit(const char* fileSrc) : dalbit()
-{
-	luaL_dofile(L, fileSrc);
-}
-
-dalbit::~dalbit()
-{
-	lua_close(L);
-}
-
-void dalbit::CallLuaFunction(const char* func, const char* argSig, int resNum, ...)
+void Dalbit::CallLuaFunction(lua_State* L, const char* func, const char* argSig, int resNum, ...)
 {
 	va_list vl;
 	int argNum = 0;
-	auto LuaStackCheck = [this](int addedStackNum)->bool {
-		if (lua_checkstack(L, 1) == false)
-		{
-			Error(false, "CallLuaFunction: Stack is full!");
-			lua_pop(L, addedStackNum);
-			return false;
-		}
-		return true;
-	};
+	int errFunc = 0;
+	auto LuaLCheckStack = [L]() {luaL_checkstack(L, 1, "CallLuaFunction:StackNotEnough"); };
 
 	va_start(vl, resNum);
 
-	if (LuaStackCheck(0) == false) return;
-
+	LuaLCheckStack();
 	lua_getglobal(L, func);
+	errFunc = lua_gettop(L);
+
+	LuaLCheckStack();
+	lua_pushcfunction(L, l_err);
+	lua_insert(L, errFunc);
 
 	while (*argSig != '\0')
 	{
-		if (LuaStackCheck(argNum + 1) == false) return;
-
+		LuaLCheckStack();
 		switch (*argSig++)
 		{
 		case 'n':
@@ -84,7 +52,7 @@ void dalbit::CallLuaFunction(const char* func, const char* argSig, int resNum, .
 		argNum += 1;
 	}
 
-	lua_pcall(L, argNum, resNum, 0);
+	lua_pcall(L, argNum, resNum, errFunc);
 	
 
 	for (int i = resNum; i > 0; i--)
@@ -103,6 +71,58 @@ void dalbit::CallLuaFunction(const char* func, const char* argSig, int resNum, .
 		}
 	}
 
-	lua_pop(L, resNum);
+	lua_pop(L, resNum+1/*errFunc*/);
 	va_end(vl);
+}
+
+void Dalbit::StackDump(lua_State* L)
+{
+	int top = lua_gettop(L);
+
+	std::cout << std::endl << "(ADDR:" << L << ") TOP = " << top << std::endl;
+
+	for (int i = 0; i <= top; i++)
+	{
+		std::cout << "STACK " << i << " : ";
+
+		switch (lua_type(L, i))
+		{
+		case LUA_TNUMBER:
+			std::cout << "(NUM) " << lua_tonumber(L, i);
+			break;
+		case LUA_TBOOLEAN:
+			std::cout << "(BOL) " << lua_toboolean(L, i);
+			break;
+		case LUA_TSTRING:
+			std::cout << "(STR) " << lua_tostring(L, i);
+			break;
+		case LUA_TNIL:
+			std::cout << "(NIL)";
+			break;
+		case LUA_TNONE:
+			std::cout << "(NON)";
+			break;
+		case LUA_TTHREAD:
+			std::cout << "(TRD)";
+			break;
+		case LUA_TFUNCTION:
+			std::cout << "(FUN)";
+			break;
+		case LUA_TTABLE:
+			std::cout << "(TBL)";
+			break;
+		case LUA_TUSERDATA:
+			std::cout << "(DAT)";
+			break;
+		case LUA_TLIGHTUSERDATA:
+			std::cout << "(LDT)";
+			break;
+		default:
+			std::cout << "(" << lua_typename(L, i) << ")";
+			break;
+		}
+
+		std::cout << std::endl;
+	}
+	std::cout << std::endl;
 }
