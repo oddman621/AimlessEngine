@@ -10,6 +10,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dalbit", "Dalbit\Dalbit.vcx
 		{1DACA6F5-A619-49A0-ACD6-CFCE908435B2} = {1DACA6F5-A619-49A0-ACD6-CFCE908435B2}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestConsole", "TestConsole\TestConsole.vcxproj", "{C0D0647B-2534-4DBF-A932-DEE157E61C96}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -34,6 +36,14 @@ Global
 		{AE9A26F6-D709-4008-9AAF-F0ECB468F253}.Release|x64.Build.0 = Release|x64
 		{AE9A26F6-D709-4008-9AAF-F0ECB468F253}.Release|x86.ActiveCfg = Release|Win32
 		{AE9A26F6-D709-4008-9AAF-F0ECB468F253}.Release|x86.Build.0 = Release|Win32
+		{C0D0647B-2534-4DBF-A932-DEE157E61C96}.Debug|x64.ActiveCfg = Debug|x64
+		{C0D0647B-2534-4DBF-A932-DEE157E61C96}.Debug|x64.Build.0 = Debug|x64
+		{C0D0647B-2534-4DBF-A932-DEE157E61C96}.Debug|x86.ActiveCfg = Debug|Win32
+		{C0D0647B-2534-4DBF-A932-DEE157E61C96}.Debug|x86.Build.0 = Debug|Win32
+		{C0D0647B-2534-4DBF-A932-DEE157E61C96}.Release|x64.ActiveCfg = Release|x64
+		{C0D0647B-2534-4DBF-A932-DEE157E61C96}.Release|x64.Build.0 = Release|x64
+		{C0D0647B-2534-4DBF-A932-DEE157E61C96}.Release|x86.ActiveCfg = Release|Win32
+		{C0D0647B-2534-4DBF-A932-DEE157E61C96}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
