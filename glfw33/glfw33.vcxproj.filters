@@ -27,12 +27,6 @@
     <ClInclude Include="glfw_config.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="glfw3.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="glfw3native.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="internal.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -49,6 +43,12 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="win32_platform.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GLFW\glfw3.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GLFW\glfw3native.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
