@@ -1,10 +1,8 @@
 #pragma once
 
-struct lua_State;
-
-
 #include "../Lua53/lua.hpp"
 
+struct lua_State;
 
 namespace Dalbit
 {
