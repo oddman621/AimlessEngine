@@ -13,27 +13,27 @@ int l_err(lua_State* L)
 	fprintf(stderr, "[lua:%s] %s\n", lua_tostring(L, 0), lua_tostring(L, 1)); // Last Error
 	return 0;
 }
+auto LuaLCheckStack = [](lua_State* L) {luaL_checkstack(L, 1, "CallLuaFunction:StackNotEnough"); };
 
 void Dalbit::CallLuaFunction(lua_State* L, const char* func, const char* argSig, int resNum, ...)
 {
 	va_list vl;
 	int argNum = 0;
 	int errFunc = 0;
-	auto LuaLCheckStack = [L]() {luaL_checkstack(L, 1, "CallLuaFunction:StackNotEnough"); };
 
 	va_start(vl, resNum);
 
-	LuaLCheckStack();
+	LuaLCheckStack(L);
 	lua_getglobal(L, func);
 	errFunc = lua_gettop(L);
 
-	LuaLCheckStack();
+	LuaLCheckStack(L);
 	lua_pushcfunction(L, l_err);
 	lua_insert(L, errFunc);
 
 	while (*argSig != '\0')
 	{
-		LuaLCheckStack();
+		LuaLCheckStack(L);
 		switch (*argSig++)
 		{
 		case 'n':
@@ -71,10 +71,11 @@ void Dalbit::CallLuaFunction(lua_State* L, const char* func, const char* argSig,
 		}
 	}
 
-	lua_pop(L, resNum+1/*errFunc*/);
+	lua_pop(L, resNum+1);
 	va_end(vl);
 }
 
+// TODO: switch-case 문을 Map 또는 HashMap으로 변경(가독성 UP)
 void Dalbit::StackDump(lua_State* L)
 {
 	int top = lua_gettop(L);
