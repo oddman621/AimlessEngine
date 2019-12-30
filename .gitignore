@@ -106,7 +106,7 @@ ipch/
 *.psess
 *.vsp
 *.vspx
-*.sap
+# *.sap
 
 # Visual Studio Trace Files
 *.e2e
@@ -338,4 +338,3 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
-/TestConsole

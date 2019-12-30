@@ -13,27 +13,31 @@ int l_err(lua_State* L)
 	fprintf(stderr, "[lua:%s] %s\n", lua_tostring(L, 0), lua_tostring(L, 1)); // Last Error
 	return 0;
 }
-auto LuaLCheckStack = [](lua_State* L) {luaL_checkstack(L, 1, "CallLuaFunction:StackNotEnough"); };
 
+// (루아인스턴스, 루아함수이름, 매개변수타입들, 리턴갯수, [루아함수 인자...], [리턴 인자...포인터에 의해 대입됨])
 void Dalbit::CallLuaFunction(lua_State* L, const char* func, const char* argSig, int resNum, ...)
 {
 	va_list vl;
 	int argNum = 0;
 	int errFunc = 0;
+	const char* stackNotEnoughMsg = "CallLuaFunction:StackNotEnough";
 
 	va_start(vl, resNum);
 
-	LuaLCheckStack(L);
+	//스택 체크 후 루아 함수이름 삽입
+	luaL_checkstack(L, 1, stackNotEnoughMsg);
 	lua_getglobal(L, func);
 	errFunc = lua_gettop(L);
 
-	LuaLCheckStack(L);
+	//스택 체크 후 에러 출력시킬 cfunction 삽입
+	luaL_checkstack(L, 1, stackNotEnoughMsg);
 	lua_pushcfunction(L, l_err);
 	lua_insert(L, errFunc);
 
+	//스택 체크하며 argSig에 맞춰 가변인자 차례대로 스택추가
 	while (*argSig != '\0')
 	{
-		LuaLCheckStack(L);
+		luaL_checkstack(L, 1, stackNotEnoughMsg);
 		switch (*argSig++)
 		{
 		case 'n':
@@ -52,9 +56,11 @@ void Dalbit::CallLuaFunction(lua_State* L, const char* func, const char* argSig,
 		argNum += 1;
 	}
 
+	//스택을 이용해 루아함수 실행
 	lua_pcall(L, argNum, resNum, errFunc);
 	
 
+	//resNum에 맞춰 가변인자에 대입(참조를 이용)
 	for (int i = resNum; i > 0; i--)
 	{
 		switch (lua_type(L, -i))

@@ -14,6 +14,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glfw33", "glfw33\glfw33.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glew210", "glew210\glew210.vcxproj", "{EC76FA1A-9202-4120-A607-7495954E3931}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestConsole", "TestConsole\TestConsole.vcxproj", "{342BAC64-B364-43FE-979C-C7B83C0B7567}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -54,6 +56,14 @@ Global
 		{EC76FA1A-9202-4120-A607-7495954E3931}.Release|x64.Build.0 = Release|x64
 		{EC76FA1A-9202-4120-A607-7495954E3931}.Release|x86.ActiveCfg = Release|Win32
 		{EC76FA1A-9202-4120-A607-7495954E3931}.Release|x86.Build.0 = Release|Win32
+		{342BAC64-B364-43FE-979C-C7B83C0B7567}.Debug|x64.ActiveCfg = Debug|x64
+		{342BAC64-B364-43FE-979C-C7B83C0B7567}.Debug|x64.Build.0 = Debug|x64
+		{342BAC64-B364-43FE-979C-C7B83C0B7567}.Debug|x86.ActiveCfg = Debug|Win32
+		{342BAC64-B364-43FE-979C-C7B83C0B7567}.Debug|x86.Build.0 = Debug|Win32
+		{342BAC64-B364-43FE-979C-C7B83C0B7567}.Release|x64.ActiveCfg = Release|x64
+		{342BAC64-B364-43FE-979C-C7B83C0B7567}.Release|x64.Build.0 = Release|x64
+		{342BAC64-B364-43FE-979C-C7B83C0B7567}.Release|x86.ActiveCfg = Release|Win32
+		{342BAC64-B364-43FE-979C-C7B83C0B7567}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
