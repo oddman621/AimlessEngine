@@ -8,6 +8,20 @@
 
 #include <iostream>
 
+const char* LuaStackName[] = {
+	LuaStackName[LUA_TNONE] = "NON",
+	LuaStackName[LUA_TNIL] = "NIL",
+	LuaStackName[LUA_TBOOLEAN] = "BOL",
+	LuaStackName[LUA_TLIGHTUSERDATA] = "LUR",
+	LuaStackName[LUA_TNUMBER] = "NUM",
+	LuaStackName[LUA_TTABLE] = "TAB",
+	LuaStackName[LUA_TSTRING] = "STR",
+	LuaStackName[LUA_TFUNCTION] = "FUN",
+	LuaStackName[LUA_TUSERDATA] = "USR",
+	LuaStackName[LUA_TTHREAD] = "THD",
+};
+
+
 int l_err(lua_State* L)
 {
 	fprintf(stderr, "[lua:%s] %s\n", lua_tostring(L, 0), lua_tostring(L, 1)); // Last Error
@@ -82,6 +96,7 @@ void Dalbit::CallLuaFunction(lua_State* L, const char* func, const char* argSig,
 }
 
 // TODO: switch-case 문을 Map 또는 HashMap으로 변경(가독성 UP)
+
 void Dalbit::StackDump(lua_State* L)
 {
 	int top = lua_gettop(L);
@@ -90,42 +105,18 @@ void Dalbit::StackDump(lua_State* L)
 
 	for (int i = 0; i <= top; i++)
 	{
-		std::cout << "STACK " << i << " : ";
+		std::cout << "STACK " << i << " : (" << LuaStackName[lua_type(L, i)] << ") ";
 
 		switch (lua_type(L, i))
 		{
 		case LUA_TNUMBER:
-			std::cout << "(NUM) " << lua_tonumber(L, i);
+			std::cout << lua_tonumber(L, i);
 			break;
 		case LUA_TBOOLEAN:
-			std::cout << "(BOL) " << lua_toboolean(L, i);
+			std::cout << lua_toboolean(L, i);
 			break;
 		case LUA_TSTRING:
-			std::cout << "(STR) " << lua_tostring(L, i);
-			break;
-		case LUA_TNIL:
-			std::cout << "(NIL)";
-			break;
-		case LUA_TNONE:
-			std::cout << "(NON)";
-			break;
-		case LUA_TTHREAD:
-			std::cout << "(TRD)";
-			break;
-		case LUA_TFUNCTION:
-			std::cout << "(FUN)";
-			break;
-		case LUA_TTABLE:
-			std::cout << "(TBL)";
-			break;
-		case LUA_TUSERDATA:
-			std::cout << "(DAT)";
-			break;
-		case LUA_TLIGHTUSERDATA:
-			std::cout << "(LDT)";
-			break;
-		default:
-			std::cout << "(" << lua_typename(L, i) << ")";
+			std::cout << lua_tostring(L, i);
 			break;
 		}
 
