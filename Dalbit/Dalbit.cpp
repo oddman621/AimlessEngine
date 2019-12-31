@@ -4,7 +4,7 @@
 #include "pch.h"
 #include "framework.h"
 #include "dalbit/Dalbit.h"
-#include "../Lua53/lua.hpp"
+#include "../include/lua/lua.hpp"
 
 #include <iostream>
 
