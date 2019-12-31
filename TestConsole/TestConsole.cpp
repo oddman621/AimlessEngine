@@ -33,6 +33,7 @@ int main()
 
     if (glewErrCode != GLEW_OK)
     {
+        glfwDestroyWindow(window);
         glfwTerminate();
         return -2;
     }
@@ -40,14 +41,14 @@ int main()
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
-        /* Render here */
-        //glClear(GL_COLOR_BUFFER_BIT);
-        glClear(0xFFFFFFFF);
-
+        glClearColor(0.0f, 0.4f, 0.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
 
+    glfwDestroyWindow(window);
     glfwTerminate();
     return 0;
 }
