@@ -29,6 +29,14 @@ int l_err(lua_State* L)
 }
 
 // (루아인스턴스, 루아함수이름, 매개변수타입들, 리턴갯수, [루아함수 인자...], [리턴 인자...포인터에 의해 대입됨])
+/*
+	예를 들어: string, number, bool을 매개변수로 하고 bool, number를 반환하는 myluafunc이라는 루아함수를 호출할 때,
+	
+	lua_State* L;
+	bool ret1;
+	double ret2;
+	Dalbit::CallLuaFunction(L, "myluafunc", "snb", 2, "mystring", 123.456, false, &ret1, &ret2);
+*/
 void Dalbit::CallLuaFunction(lua_State* L, const char* func, const char* argSig, int resNum, ...)
 {
 	va_list vl;
