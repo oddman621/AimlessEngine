@@ -115,9 +115,10 @@ void Dalbit::StackDump(lua_State* L)
 	public:
 		const char* operator[](int i) const
 		{
-			return list[i + 1];
+			//i가 올바른 숫자범위일 경우 list[i+1], 아닐 경우 "ERR"
+			return (i >= 0 && i <= LUA_NUMTAGS) ? list[i + 1] : "ERR";
 		}
-	} stackName;
+	} static const stackName;
 
 	int top = lua_gettop(L);
 
