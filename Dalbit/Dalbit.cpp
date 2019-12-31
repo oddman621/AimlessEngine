@@ -8,18 +8,7 @@
 
 #include <iostream>
 
-const char* LuaStackName[] = {
-	LuaStackName[LUA_TNONE] = "NON",
-	LuaStackName[LUA_TNIL] = "NIL",
-	LuaStackName[LUA_TBOOLEAN] = "BOL",
-	LuaStackName[LUA_TLIGHTUSERDATA] = "LUR",
-	LuaStackName[LUA_TNUMBER] = "NUM",
-	LuaStackName[LUA_TTABLE] = "TAB",
-	LuaStackName[LUA_TSTRING] = "STR",
-	LuaStackName[LUA_TFUNCTION] = "FUN",
-	LuaStackName[LUA_TUSERDATA] = "USR",
-	LuaStackName[LUA_TTHREAD] = "THD",
-};
+
 
 
 int l_err(lua_State* L)
@@ -108,13 +97,35 @@ void Dalbit::CallLuaFunction(lua_State* L, const char* func, const char* argSig,
 
 void Dalbit::StackDump(lua_State* L)
 {
+	class LuaStackName {
+	private:
+		const char* list[LUA_NUMTAGS + 1] = {
+			list[LUA_TNONE + 1] = "NON",
+			list[LUA_TNIL + 1] = "NIL",
+			list[LUA_TBOOLEAN + 1] = "BOL",
+			list[LUA_TLIGHTUSERDATA + 1] = "LUR",
+			list[LUA_TNUMBER + 1] = "NUM",
+			list[LUA_TTABLE + 1] = "TAB",
+			list[LUA_TSTRING + 1] = "STR",
+			list[LUA_TFUNCTION + 1] = "FUN",
+			list[LUA_TUSERDATA + 1] = "USR",
+			list[LUA_TTHREAD + 1] = "THD",
+		};
+
+	public:
+		const char* operator[](int i) const
+		{
+			return list[i + 1];
+		}
+	} stackName;
+
 	int top = lua_gettop(L);
 
 	std::cout << std::endl << "(ADDR:" << L << ") TOP = " << top << std::endl;
 
 	for (int i = 0; i <= top; i++)
 	{
-		std::cout << "STACK " << i << " : (" << LuaStackName[lua_type(L, i)] << ") ";
+		std::cout << "STACK " << i << " : (" << stackName[lua_type(L, i)] << ") ";
 
 		switch (lua_type(L, i))
 		{
