@@ -93,8 +93,6 @@ void Dalbit::CallLuaFunction(lua_State* L, const char* func, const char* argSig,
 	va_end(vl);
 }
 
-// TODO: switch-case 문을 Map 또는 HashMap으로 변경(가독성 UP)
-
 void Dalbit::StackDump(lua_State* L)
 {
 	class LuaStackName {
