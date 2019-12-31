@@ -3,8 +3,8 @@
 
 #pragma comment(lib, "opengl32.lib")
 
-#include "../glew210/GL/glew.h"
-#include "../glfw33/GLFW/glfw3.h"
+#include "../include/GL/glew.h"
+#include "../include/GLFW/glfw3.h"
 
 #include <iostream>
 
