@@ -38,12 +38,17 @@ int main()
         return -2;
     }
 
+    const GLfloat red[4] = { 1.0f, 0.0f, 0.0f, 1.0f };
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
-        glClearColor(0.0f, 0.4f, 0.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        // First Method
+        //glClearColor(0.0f, 0.4f, 0.0f, 1.0f);
+        //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
+        // Second Method
+        glClearBufferfv(GL_COLOR, 0, red);
+
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
