@@ -1,13 +1,15 @@
-﻿// TestConsole.cpp : 이 파일에는 'main' 함수가 포함됩니다. 거기서 프로그램 실행이 시작되고 종료됩니다.
+﻿// SimplePingPong.cpp : 이 파일에는 'main' 함수가 포함됩니다. 거기서 프로그램 실행이 시작되고 종료됩니다.
 //
 
 #pragma comment(lib, "opengl32.lib")
 
-#include "../include/GL/glew.h"
-#include "../include/GLFW/glfw3.h"
-#include "../include/glm/glm.hpp"
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
 
 #include <iostream>
+
+// 1인 스쿼시 핑퐁을 별다른 청사진이나 설계없이 코딩한다.
 
 int main()
 {
@@ -15,14 +17,14 @@ int main()
 
     /* Initialize the library */
     if (!glfwInit())
-        return -1;
+        return 1;
 
     /* Create a windowed mode window and its OpenGL context */
     window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
-        return -1;
+        return 2;
     }
 
     /* Make the window's context current */
@@ -36,26 +38,14 @@ int main()
     {
         glfwDestroyWindow(window);
         glfwTerminate();
-        return -2;
+        return 3;
     }
 
-    //glClearColor(0.0f, 0.4f, 0.0f, 1.0f);               // First Method
-    const GLfloat red[4] = { 1.0f, 0.0f, 0.0f, 1.0f };  // Second Method
-    /* Loop until the user closes the window */
+    double elapsedTime = 0, deltaTime = 0;
     while (!glfwWindowShouldClose(window))
     {
-        double elapsedTime = glfwGetTime();
-        float colorSin = (glm::sin(elapsedTime) + 1.0) / 2.0;
-        float colorCos = (glm::cos(elapsedTime) + 1.0) / 2.0;
-        float colorSinCos = glm::sin(elapsedTime) + glm::cos(elapsedTime);
-        //glClearColor(colorSin, colorCos, colorSinCos, 1.0f);
-        const GLfloat trigoColor[4] = { colorSin, colorCos, colorSinCos, 1.0f };
-
-        // First Method
-        //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        
-        // Second Method
-        glClearBufferfv(GL_COLOR, 0, trigoColor);
+        elapsedTime = glfwGetTime();
+        deltaTime = elapsedTime - deltaTime;
 
         glfwSwapBuffers(window);
         glfwPollEvents();
