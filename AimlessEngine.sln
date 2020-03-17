@@ -18,6 +18,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestConsole", "TestConsole\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Engine", "Engine\Engine.vcxproj", "{90D6C317-CF8C-4509-9091-B33EBDE25D14}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{1FD35082-2A95-4F81-9792-3AD6FBFE001F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{8E5F4263-57C7-420A-9ACA-28924C8CB177}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -77,6 +81,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1DACA6F5-A619-49A0-ACD6-CFCE908435B2} = {1FD35082-2A95-4F81-9792-3AD6FBFE001F}
+		{AE9A26F6-D709-4008-9AAF-F0ECB468F253} = {1FD35082-2A95-4F81-9792-3AD6FBFE001F}
+		{CB6D5DB9-0C30-47A4-AE95-E827BE109DC5} = {1FD35082-2A95-4F81-9792-3AD6FBFE001F}
+		{EC76FA1A-9202-4120-A607-7495954E3931} = {1FD35082-2A95-4F81-9792-3AD6FBFE001F}
+		{342BAC64-B364-43FE-979C-C7B83C0B7567} = {8E5F4263-57C7-420A-9ACA-28924C8CB177}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {561CAC1C-8EB3-46DD-82F6-23DF367E6DAD}
