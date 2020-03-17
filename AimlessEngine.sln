@@ -16,11 +16,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glew210", "glew210\glew210.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestConsole", "TestConsole\TestConsole.vcxproj", "{342BAC64-B364-43FE-979C-C7B83C0B7567}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Engine", "Engine\Engine.vcxproj", "{90D6C317-CF8C-4509-9091-B33EBDE25D14}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{1FD35082-2A95-4F81-9792-3AD6FBFE001F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{8E5F4263-57C7-420A-9ACA-28924C8CB177}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "framework", "framework", "{12F4BBB7-3148-424D-A4EB-2D2632338895}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,14 +70,6 @@ Global
 		{342BAC64-B364-43FE-979C-C7B83C0B7567}.Release|x64.Build.0 = Release|x64
 		{342BAC64-B364-43FE-979C-C7B83C0B7567}.Release|x86.ActiveCfg = Release|Win32
 		{342BAC64-B364-43FE-979C-C7B83C0B7567}.Release|x86.Build.0 = Release|Win32
-		{90D6C317-CF8C-4509-9091-B33EBDE25D14}.Debug|x64.ActiveCfg = Debug|x64
-		{90D6C317-CF8C-4509-9091-B33EBDE25D14}.Debug|x64.Build.0 = Debug|x64
-		{90D6C317-CF8C-4509-9091-B33EBDE25D14}.Debug|x86.ActiveCfg = Debug|Win32
-		{90D6C317-CF8C-4509-9091-B33EBDE25D14}.Debug|x86.Build.0 = Debug|Win32
-		{90D6C317-CF8C-4509-9091-B33EBDE25D14}.Release|x64.ActiveCfg = Release|x64
-		{90D6C317-CF8C-4509-9091-B33EBDE25D14}.Release|x64.Build.0 = Release|x64
-		{90D6C317-CF8C-4509-9091-B33EBDE25D14}.Release|x86.ActiveCfg = Release|Win32
-		{90D6C317-CF8C-4509-9091-B33EBDE25D14}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
