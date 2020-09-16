@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClCompile Include="VulkanPlayground.cpp" />
     <ClCompile Include="VulkanTutorial.cpp" />
+    <ClCompile Include="VulkanTutorial_internalfunc.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\glfw33\glfw33.vcxproj">
@@ -161,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VulkanTutorial.h" />
+    <ClInclude Include="VulkanTutorial_internalfunc.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

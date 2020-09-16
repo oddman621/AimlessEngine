@@ -21,9 +21,15 @@
     <ClCompile Include="VulkanTutorial.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="VulkanTutorial_internalfunc.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VulkanTutorial.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="VulkanTutorial_internalfunc.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -18,8 +18,12 @@ private:
     const bool enableValidationLayers = true;
 #endif
 public:
-
     void run();
+private:
+    void initWindow();
+    void initVulkan();
+    void mainLoop();
+    void cleanup();
 
 private:
     GLFWwindow* window;
@@ -28,15 +32,16 @@ private:
     VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
 
 private:
-    bool checkValidationLayerSupport();
-    void initWindow();
-    void initVulkan();
-    void pickPhysicalDevice();
-    bool isDeviceSuitable(VkPhysicalDevice device);
-    void populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo);
-    void setupDebugMessenger();
+    // Instance, Extensions
     std::vector<const char*> getRequiredExtensions();
     void createInstance();
-    void mainLoop();
-    void cleanup();
+
+    // Validation, Debug
+    bool checkValidationLayerSupport();
+    void populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo);
+    void setupDebugMessenger();
+
+    // PhysicalDevice
+    void pickPhysicalDevice();
+    bool isDeviceSuitable(VkPhysicalDevice device);
 };
