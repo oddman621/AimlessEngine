@@ -152,11 +152,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="VulkanPlayground.cpp" />
+    <ClCompile Include="VulkanTutorial.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\glfw33\glfw33.vcxproj">
       <Project>{cb6d5db9-0c30-47a4-ae95-e827be109dc5}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="VulkanTutorial.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
