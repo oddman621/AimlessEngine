@@ -1,78 +1,235 @@
-﻿// TestConsole.cpp : 이 파일에는 'main' 함수가 포함됩니다. 거기서 프로그램 실행이 시작되고 종료됩니다.
-//
+﻿#include <vulkan/vulkan.h>
 
-#pragma comment(lib, "opengl32.lib")
-
-#include "../include/GL/glew.h"
-#include "../include/GLFW/glfw3.h"
-#include "../include/glm/glm.hpp"
+#define GLFW_INCLUDE_VULKAN
+#include <GLFW/glfw3.h>
 
 #include <iostream>
+#include <stdexcept>
+#include <cstdlib>
+#include <vector>
 
-int main()
+#include <cstring>
+#include <string>
+#include <map>
+
+static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
+    VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
+    VkDebugUtilsMessageTypeFlagsEXT messageType,
+    const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
+    void* pUserData)
 {
-    GLFWwindow* window;
-
-    /* Initialize the library */
-    if (!glfwInit())
-        return -1;
-
-    /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
-    if (!window)
-    {
-        glfwTerminate();
-        return -1;
-    }
-
-    /* Make the window's context current */
-    glfwMakeContextCurrent(window);
-
-    // 컨텍스트가 생성되어야 glew 초기화가 가능하다.
-    GLenum glewErrCode = glewInit();
-    std::cout << "GLEW: " << glewGetErrorString(glewErrCode) << std::endl;
-
-    if (glewErrCode != GLEW_OK)
-    {
-        glfwDestroyWindow(window);
-        glfwTerminate();
-        return -2;
-    }
-
-    //glClearColor(0.0f, 0.4f, 0.0f, 1.0f);               // First Method
-    const GLfloat red[4] = { 1.0f, 0.0f, 0.0f, 1.0f };  // Second Method
-    /* Loop until the user closes the window */
-    while (!glfwWindowShouldClose(window))
-    {
-        double elapsedTime = glfwGetTime();
-        float colorSin = (glm::sin(elapsedTime) + 1.0) / 2.0;
-        float colorCos = (glm::cos(elapsedTime) + 1.0) / 2.0;
-        float colorSinCos = glm::sin(elapsedTime) + glm::cos(elapsedTime);
-        //glClearColor(colorSin, colorCos, colorSinCos, 1.0f);
-        const GLfloat trigoColor[4] = { colorSin, colorCos, colorSinCos, 1.0f };
-
-        // First Method
-        //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        
-        // Second Method
-        glClearBufferfv(GL_COLOR, 0, trigoColor);
-
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-    }
-
-    glfwDestroyWindow(window);
-    glfwTerminate();
-    return 0;
+    std::cerr << "validation layer: " << pCallbackData->pMessage << std::endl;
+    return VK_FALSE;
 }
 
-// 프로그램 실행: <Ctrl+F5> 또는 [디버그] > [디버깅하지 않고 시작] 메뉴
-// 프로그램 디버그: <F5> 키 또는 [디버그] > [디버깅 시작] 메뉴
+VkResult CreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo,
+    const VkAllocationCallbacks* pAllocator, VkDebugUtilsMessengerEXT* pDebugMessenger)
+{
+    auto func = (PFN_vkCreateDebugUtilsMessengerEXT)vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
+    if (func == nullptr) return VK_ERROR_EXTENSION_NOT_PRESENT;
+    return func(instance, pCreateInfo, pAllocator, pDebugMessenger);
+}
 
-// 시작을 위한 팁: 
-//   1. [솔루션 탐색기] 창을 사용하여 파일을 추가/관리합니다.
-//   2. [팀 탐색기] 창을 사용하여 소스 제어에 연결합니다.
-//   3. [출력] 창을 사용하여 빌드 출력 및 기타 메시지를 확인합니다.
-//   4. [오류 목록] 창을 사용하여 오류를 봅니다.
-//   5. [프로젝트] > [새 항목 추가]로 이동하여 새 코드 파일을 만들거나, [프로젝트] > [기존 항목 추가]로 이동하여 기존 코드 파일을 프로젝트에 추가합니다.
-//   6. 나중에 이 프로젝트를 다시 열려면 [파일] > [열기] > [프로젝트]로 이동하고 .sln 파일을 선택합니다.
+void DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT debugMessenger,
+    const VkAllocationCallbacks* pAllocator)
+{
+    auto func = (PFN_vkDestroyDebugUtilsMessengerEXT)vkGetInstanceProcAddr(instance, "vkDestroyDebugUtilsMessengerEXT");
+    if (func != nullptr) func(instance, debugMessenger, pAllocator);
+}
+
+class HelloTriangleApplication {
+private:
+    const uint32_t WIDTH = 800;
+    const uint32_t HEIGHT = 600;
+    const std::vector<const char*> validationLayers = {
+        "VK_LAYER_KHRONOS_validation",
+    };
+#ifdef NDEBUG
+    const bool enableValidationLayers = false;
+#else
+    const bool enableValidationLayers = true;
+#endif
+public:
+
+    void run() {
+        initWindow();
+        initVulkan();
+        mainLoop();
+        cleanup();
+    }
+
+private:
+    GLFWwindow* window;
+    VkInstance instance;
+    VkDebugUtilsMessengerEXT debugMessenger;
+    VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
+
+private:
+
+    bool checkValidationLayerSupport()
+    {
+        uint32_t layerCount;
+        vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
+
+        std::vector<VkLayerProperties> availableLayers(layerCount);
+        vkEnumerateInstanceLayerProperties(&layerCount, availableLayers.data());
+
+        for (auto layerName : validationLayers)
+        {
+            bool layerFound = false;
+            for(auto &layerProperties : availableLayers)
+                if (strcmp(layerName, layerProperties.layerName) == 0) {
+                    layerFound = true;
+                    break;
+                }
+            if (!layerFound) return false;
+        }
+
+        return true;
+    }
+
+    void initWindow()
+    {
+        glfwInit();
+
+        glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API); // Tell GLFW not going to use OpenGL
+        glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE); // Not using resizable which need special care
+
+        window = glfwCreateWindow(800, 600, "Vulkan Window", nullptr, nullptr);
+    }
+    void initVulkan() {
+        createInstance();
+        setupDebugMessenger();
+        pickPhysicalDevice();
+    }
+
+    void pickPhysicalDevice() {
+        uint32_t deviceCount = 0;
+        vkEnumeratePhysicalDevices(instance, &deviceCount, nullptr);
+        if (deviceCount == 0) throw std::runtime_error("failed to find GPUs with Vulkan support!");
+
+        std::vector<VkPhysicalDevice> devices(deviceCount);
+        vkEnumeratePhysicalDevices(instance, &deviceCount, devices.data());
+
+        for(const auto& device : devices)
+            if (isDeviceSuitable(device))
+            {
+                physicalDevice = device;
+                break;
+            }
+
+        if (physicalDevice == VK_NULL_HANDLE)
+            throw std::runtime_error("failed to find a suitable GPU!");
+    }
+
+    bool isDeviceSuitable(VkPhysicalDevice device)
+    {
+        VkPhysicalDeviceProperties deviceProperties;
+        VkPhysicalDeviceFeatures deviceFeatures;
+        vkGetPhysicalDeviceProperties(device, &deviceProperties);
+        vkGetPhysicalDeviceFeatures(device, &deviceFeatures);
+
+        return true;
+    }
+
+    void populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo)
+    {
+        createInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
+        createInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
+        createInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
+        createInfo.pfnUserCallback = debugCallback;
+        //createInfo.pUserData = nullptr;
+    }
+
+    void setupDebugMessenger()
+    {
+        if (!enableValidationLayers) return;
+        VkDebugUtilsMessengerCreateInfoEXT createInfo{};
+        populateDebugMessengerCreateInfo(createInfo);
+
+        if (CreateDebugUtilsMessengerEXT(instance, &createInfo, nullptr, &debugMessenger) != VK_SUCCESS)
+            throw std::runtime_error("failed to set up debug messenger!");
+    }
+
+    std::vector<const char*> getRequiredExtensions()
+    {
+        uint32_t glfwExtensionCount = 0;
+        const char** glfwExtensions;
+        glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
+        std::vector<const char*> extensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
+
+        if (enableValidationLayers)
+            extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+
+        return extensions;
+    }
+
+    void createInstance() {
+        if (enableValidationLayers && !checkValidationLayerSupport())
+            throw std::runtime_error("validation layers requested, but not available!");
+
+        VkApplicationInfo appInfo{};
+        appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
+        appInfo.pApplicationName = "Hello Triangle";
+        appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
+        appInfo.pEngineName = "No Engine";
+        appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
+        appInfo.apiVersion = VK_API_VERSION_1_0;
+        appInfo.pNext = nullptr;
+
+        VkInstanceCreateInfo createInfo{};
+        createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
+        createInfo.pApplicationInfo = &appInfo;
+
+        auto extensions = getRequiredExtensions();
+        createInfo.enabledExtensionCount = static_cast<uint32_t>(extensions.size());
+        createInfo.ppEnabledExtensionNames = extensions.data();
+
+        static VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo;
+        if (enableValidationLayers)
+        {
+            createInfo.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());
+            createInfo.ppEnabledLayerNames = validationLayers.data();
+
+            populateDebugMessengerCreateInfo(debugCreateInfo);
+            createInfo.pNext = static_cast<VkDebugUtilsMessengerCreateInfoEXT*>(&debugCreateInfo);
+        }
+        else
+        {
+            createInfo.enabledLayerCount = 0;
+            createInfo.ppEnabledLayerNames = nullptr;
+        }
+
+        VkResult result = vkCreateInstance(&createInfo, nullptr, &instance);
+
+        if (result != VK_SUCCESS) throw std::runtime_error("failed to create instance!");
+    }
+
+    void mainLoop() {
+        while (!glfwWindowShouldClose(window))
+        {
+            glfwPollEvents();
+        }
+    }
+
+    void cleanup() {
+        if (enableValidationLayers) DestroyDebugUtilsMessengerEXT(instance, debugMessenger, nullptr);
+        vkDestroyInstance(instance, nullptr);
+        glfwDestroyWindow(window);
+        glfwTerminate();
+    }
+};
+
+int main() {
+    HelloTriangleApplication app;
+
+    try {
+        app.run();
+    }
+    catch (const std::exception& e) {
+        std::cerr << e.what() << std::endl;
+        return EXIT_FAILURE;
+    }
+
+    return EXIT_SUCCESS;
+}
