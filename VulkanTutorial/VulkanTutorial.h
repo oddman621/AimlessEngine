@@ -36,6 +36,8 @@ private:
     VkInstance instance;
     VkDebugUtilsMessengerEXT debugMessenger;
     VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
+    VkDevice device;
+    VkQueue graphicsQueue;
 
 private:
     // Instance, Extensions
@@ -53,4 +55,7 @@ private:
 
     // QueueFamilies
     QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
+
+    // LogicalDevice
+    void createLogicalDevice();
 };

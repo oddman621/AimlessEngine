@@ -12,7 +12,7 @@
 #include <string>
 #include <optional>
 
-#include "VulkanTutorial_internalfunc.h"
+#include "VulkanTutorial_Callbacks.h"
 
 
 void HelloTriangleApplication::run() {
@@ -57,6 +57,45 @@ void HelloTriangleApplication::initVulkan() {
     createInstance();
     setupDebugMessenger();
     pickPhysicalDevice();
+    createLogicalDevice();
+}
+
+void HelloTriangleApplication::createLogicalDevice()
+{
+    QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
+
+    VkDeviceQueueCreateInfo queueCreateInfo{};
+    queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+    queueCreateInfo.queueFamilyIndex = indices.graphicsFamily.value();
+    queueCreateInfo.queueCount = 1;
+
+    float queuePriority = 1.0f;
+    queueCreateInfo.pQueuePriorities = &queuePriority;
+
+    VkPhysicalDeviceFeatures deviceFeatures{};
+    VkDeviceCreateInfo createInfo{};
+    createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
+    createInfo.pQueueCreateInfos = &queueCreateInfo;
+    createInfo.queueCreateInfoCount = 1;
+    createInfo.pEnabledFeatures = &deviceFeatures;
+
+    /// <summary>
+    /// enabledLayerCount, ppEnabledLayerNames is ignored by up-to-date implementations, still good to set them for backward compatibility.
+    /// https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#extendingvulkan-layers-devicelayerdeprecation
+    /// tl;dr : Device-only layers are now deprecated
+    /// </summary>
+    if (enableValidationLayers)
+    {
+        createInfo.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());
+        createInfo.ppEnabledLayerNames = validationLayers.data();
+    }
+    else
+        createInfo.enabledLayerCount = 0;
+
+    if (vkCreateDevice(physicalDevice, &createInfo, nullptr, &device) != VK_SUCCESS)
+        throw std::runtime_error("failed to create logical device!");
+
+    vkGetDeviceQueue(device, indices.graphicsFamily.value(), 0, &graphicsQueue);
 }
 
 void HelloTriangleApplication::pickPhysicalDevice() {
@@ -80,19 +119,19 @@ void HelloTriangleApplication::pickPhysicalDevice() {
 
 bool HelloTriangleApplication::isDeviceSuitable(VkPhysicalDevice device)
 {
-    ///// DISCRETE GPU
-    //VkPhysicalDeviceProperties deviceProperties;
-    //VkPhysicalDeviceFeatures deviceFeatures;
-    //vkGetPhysicalDeviceProperties(device, &deviceProperties);
-    //vkGetPhysicalDeviceFeatures(device, &deviceFeatures);
+    /// DISCRETE GPU
+    VkPhysicalDeviceProperties deviceProperties;
+    VkPhysicalDeviceFeatures deviceFeatures;
+    vkGetPhysicalDeviceProperties(device, &deviceProperties);
+    vkGetPhysicalDeviceFeatures(device, &deviceFeatures);
 
-    //bool discrete = deviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU;
+    bool discrete = deviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU;
 
-    //return discrete;
-
-    /// GRAPHICS QUEUE FAMILY
+    /// QUEUE FAMILY
     QueueFamilyIndices indices = findQueueFamilies(device);
-    return indices.graphicsFamily.has_value();
+    bool queueFamily = indices.graphicsFamily.has_value();
+    
+    return discrete && queueFamily;
 }
 
 QueueFamilyIndices HelloTriangleApplication::findQueueFamilies(VkPhysicalDevice device)
@@ -193,6 +232,7 @@ void HelloTriangleApplication::mainLoop() {
 }
 
 void HelloTriangleApplication::cleanup() {
+    vkDestroyDevice(device, nullptr);
     if (enableValidationLayers) DestroyDebugUtilsMessengerEXT(instance, debugMessenger, nullptr);
     vkDestroyInstance(instance, nullptr);
     glfwDestroyWindow(window);
