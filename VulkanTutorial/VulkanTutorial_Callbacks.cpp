@@ -1,5 +1,5 @@
 #pragma warning (disable : 26812)
-#include "VulkanTutorial_internalfunc.h"
+#include "VulkanTutorial_Callbacks.h"
 #include <iostream>
 
 VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
