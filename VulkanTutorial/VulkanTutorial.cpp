@@ -1,4 +1,4 @@
-#include "VulkanTutorial.h"
+﻿#include "VulkanTutorial.h"
 
 #include <vulkan/vulkan.h>
 
@@ -9,10 +9,8 @@
 #include <stdexcept>
 #include <cstdlib>
 #include <vector>
-
-#include <cstring>
 #include <string>
-#include <map>
+#include <optional>
 
 #include "VulkanTutorial_internalfunc.h"
 
@@ -82,12 +80,36 @@ void HelloTriangleApplication::pickPhysicalDevice() {
 
 bool HelloTriangleApplication::isDeviceSuitable(VkPhysicalDevice device)
 {
-    VkPhysicalDeviceProperties deviceProperties;
-    VkPhysicalDeviceFeatures deviceFeatures;
-    vkGetPhysicalDeviceProperties(device, &deviceProperties);
-    vkGetPhysicalDeviceFeatures(device, &deviceFeatures);
+    ///// DISCRETE GPU
+    //VkPhysicalDeviceProperties deviceProperties;
+    //VkPhysicalDeviceFeatures deviceFeatures;
+    //vkGetPhysicalDeviceProperties(device, &deviceProperties);
+    //vkGetPhysicalDeviceFeatures(device, &deviceFeatures);
 
-    return true;
+    //bool discrete = deviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU;
+
+    //return discrete;
+
+    /// GRAPHICS QUEUE FAMILY
+    QueueFamilyIndices indices = findQueueFamilies(device);
+    return indices.graphicsFamily.has_value();
+}
+
+QueueFamilyIndices HelloTriangleApplication::findQueueFamilies(VkPhysicalDevice device)
+{
+    QueueFamilyIndices indices{};
+
+    uint32_t queueFamilyCount = 0;
+    vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, nullptr);
+
+    std::vector<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
+    vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, queueFamilies.data());
+
+    for (int i = 0; i < queueFamilies.size(); i++)
+        if (queueFamilies[i].queueFlags & VK_QUEUE_GRAPHICS_BIT)
+            indices.graphicsFamily = i;
+
+    return indices;
 }
 
 void HelloTriangleApplication::populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo)

@@ -24,6 +24,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VulkanPlayground", "VulkanP
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenGLPlayground", "OpenGLPlayground\OpenGLPlayground.vcxproj", "{DD67475A-26AB-49EF-A954-78684347CE04}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VulkanTutorial", "VulkanTutorial\VulkanTutorial.vcxproj", "{98704AA8-5DD1-4880-B11F-5765CF345B3E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -80,6 +82,14 @@ Global
 		{DD67475A-26AB-49EF-A954-78684347CE04}.Release|x64.Build.0 = Release|x64
 		{DD67475A-26AB-49EF-A954-78684347CE04}.Release|x86.ActiveCfg = Release|Win32
 		{DD67475A-26AB-49EF-A954-78684347CE04}.Release|x86.Build.0 = Release|Win32
+		{98704AA8-5DD1-4880-B11F-5765CF345B3E}.Debug|x64.ActiveCfg = Debug|x64
+		{98704AA8-5DD1-4880-B11F-5765CF345B3E}.Debug|x64.Build.0 = Debug|x64
+		{98704AA8-5DD1-4880-B11F-5765CF345B3E}.Debug|x86.ActiveCfg = Debug|Win32
+		{98704AA8-5DD1-4880-B11F-5765CF345B3E}.Debug|x86.Build.0 = Debug|Win32
+		{98704AA8-5DD1-4880-B11F-5765CF345B3E}.Release|x64.ActiveCfg = Release|x64
+		{98704AA8-5DD1-4880-B11F-5765CF345B3E}.Release|x64.Build.0 = Release|x64
+		{98704AA8-5DD1-4880-B11F-5765CF345B3E}.Release|x86.ActiveCfg = Release|Win32
+		{98704AA8-5DD1-4880-B11F-5765CF345B3E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,6 +101,7 @@ Global
 		{EC76FA1A-9202-4120-A607-7495954E3931} = {1FD35082-2A95-4F81-9792-3AD6FBFE001F}
 		{9CDDD827-E10F-4AD8-B6F1-A31C2CE5A0FB} = {8E5F4263-57C7-420A-9ACA-28924C8CB177}
 		{DD67475A-26AB-49EF-A954-78684347CE04} = {8E5F4263-57C7-420A-9ACA-28924C8CB177}
+		{98704AA8-5DD1-4880-B11F-5765CF345B3E} = {8E5F4263-57C7-420A-9ACA-28924C8CB177}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {561CAC1C-8EB3-46DD-82F6-23DF367E6DAD}

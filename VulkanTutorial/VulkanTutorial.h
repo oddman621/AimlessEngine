@@ -3,7 +3,13 @@
 #include <vulkan/vulkan.h>
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
+
 #include <vector>
+#include <optional>
+
+struct QueueFamilyIndices {
+    std::optional<uint32_t> graphicsFamily;
+};
 
 class HelloTriangleApplication {
 private:
@@ -44,4 +50,7 @@ private:
     // PhysicalDevice
     void pickPhysicalDevice();
     bool isDeviceSuitable(VkPhysicalDevice device);
+
+    // QueueFamilies
+    QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
 };

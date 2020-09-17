@@ -2,6 +2,7 @@
 
 #include <vulkan/vulkan.h>
 
+// Debugs
 VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
     VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
     VkDebugUtilsMessageTypeFlagsEXT messageType,
