@@ -2,7 +2,6 @@
 
 #include <vulkan/vulkan.h>
 
-#define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
 #include <iostream>
@@ -20,6 +19,28 @@ void HelloTriangleApplication::run() {
     initVulkan();
     mainLoop();
     cleanup();
+}
+
+void HelloTriangleApplication::initWindow()
+{
+    glfwInit();
+
+    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API); // Tell GLFW not going to use OpenGL
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE); // Not using resizable which need special care
+
+    window = glfwCreateWindow(800, 600, "Vulkan Window", nullptr, nullptr);
+}
+void HelloTriangleApplication::initVulkan() {
+    createInstance();
+    setupDebugMessenger();
+    createSurface();
+    pickPhysicalDevice();
+    createLogicalDevice();
+}
+
+void HelloTriangleApplication::createSurface() {
+    if (glfwCreateWindowSurface(instance, window, nullptr, &surface) != VK_SUCCESS)
+        throw std::runtime_error("failed to create window surface!");
 }
 
 bool HelloTriangleApplication::checkValidationLayerSupport()
@@ -44,21 +65,6 @@ bool HelloTriangleApplication::checkValidationLayerSupport()
     return true;
 }
 
-void HelloTriangleApplication::initWindow()
-{
-    glfwInit();
-
-    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API); // Tell GLFW not going to use OpenGL
-    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE); // Not using resizable which need special care
-
-    window = glfwCreateWindow(800, 600, "Vulkan Window", nullptr, nullptr);
-}
-void HelloTriangleApplication::initVulkan() {
-    createInstance();
-    setupDebugMessenger();
-    pickPhysicalDevice();
-    createLogicalDevice();
-}
 
 void HelloTriangleApplication::createLogicalDevice()
 {
