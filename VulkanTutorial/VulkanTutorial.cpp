@@ -52,6 +52,13 @@ void HelloTriangleApplication::createSurface() {
         throw std::runtime_error("failed to create window surface!");
 }
 
+SwapChainSupportDetails HelloTriangleApplication::querySwapChainSupport(VkPhysicalDevice device)
+{
+
+
+    return SwapChainSupportDetails();
+}
+
 bool HelloTriangleApplication::checkValidationLayerSupport()
 {
     uint32_t layerCount;
@@ -152,8 +159,11 @@ bool HelloTriangleApplication::isDeviceSuitable(VkPhysicalDevice device)
     /// QUEUE FAMILY
     QueueFamilyIndices indices = findQueueFamilies(device);
     bool queueFamily = indices.graphicsFamily.has_value();
+
+    /// EXTENSION SUPPORT
+    bool extensionSupported = checkDeviceExtensionSupport(device);
     
-    return discrete && queueFamily;
+    return discrete && queueFamily && extensionSupported;
 }
 
 QueueFamilyIndices HelloTriangleApplication::findQueueFamilies(VkPhysicalDevice device)
@@ -211,6 +221,22 @@ std::vector<const char*> HelloTriangleApplication::getRequiredExtensions()
     return extensions;
 }
 
+bool HelloTriangleApplication::checkDeviceExtensionSupport(VkPhysicalDevice device)
+{
+    uint32_t extensionCount;
+    vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
+
+    std::vector<VkExtensionProperties> availableExtensions(extensionCount);
+    vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, availableExtensions.data());
+
+    std::set<std::string> requiredExtensions(deviceExtensions.begin(), deviceExtensions.end());
+
+    for (const auto& extension : availableExtensions)
+        requiredExtensions.erase(extension.extensionName);
+
+    return requiredExtensions.empty();
+}
+
 void HelloTriangleApplication::createInstance() {
     if (enableValidationLayers && !checkValidationLayerSupport())
         throw std::runtime_error("validation layers requested, but not available!");
@@ -228,9 +254,12 @@ void HelloTriangleApplication::createInstance() {
     createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
     createInfo.pApplicationInfo = &appInfo;
 
-    auto extensions = getRequiredExtensions();
+    /// Check Extensions
+    //auto extensions = getRequiredExtensions(); // Required Extensions
+    auto extensions = deviceExtensions; // Extensions what I'm going to use..?
     createInfo.enabledExtensionCount = static_cast<uint32_t>(extensions.size());
     createInfo.ppEnabledExtensionNames = extensions.data();
+
 
     static VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo;
     if (enableValidationLayers)
