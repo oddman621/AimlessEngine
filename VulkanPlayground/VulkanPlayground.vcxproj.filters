@@ -18,5 +18,13 @@
     <ClCompile Include="VulkanPlayground.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="VulkanApp.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="VulkanApp.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
