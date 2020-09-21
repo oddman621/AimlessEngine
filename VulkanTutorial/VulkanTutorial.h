@@ -8,6 +8,7 @@
 
 struct QueueFamilyIndices {
     std::optional<uint32_t> graphicsFamily;
+    std::optional<uint32_t> presentFamily;
 };
 
 class HelloTriangleApplication {
@@ -37,6 +38,7 @@ private:
     VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
     VkDevice device;
     VkQueue graphicsQueue;
+    VkQueue presentQueue;
     VkSurfaceKHR surface;
 
 private:
