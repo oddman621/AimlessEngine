@@ -5,6 +5,7 @@
 #include <GLFW/glfw3.h>
 
 #include <iostream>
+#include <fstream>
 #include <stdexcept>
 #include <cstdlib>
 #include <vector>
@@ -14,6 +15,19 @@
 
 #include "VulkanTutorial_Callbacks.h"
 
+
+std::vector<char> HelloTriangleApplication::readFile(const std::string& filename)
+{
+    std::ifstream file(filename, std::ios::ate | std::ios::binary);
+    if (!file.is_open()) throw std::runtime_error("failed to open file!");
+    size_t fileSize = (size_t)file.tellg();
+    std::vector<char> buffer(fileSize);
+    file.seekg(0);
+    file.read(buffer.data(), fileSize);
+    file.close();
+
+    return buffer;
+}
 
 void HelloTriangleApplication::run() {
     initWindow();
@@ -198,6 +212,12 @@ void HelloTriangleApplication::createImageViews()
         if (vkCreateImageView(device, &createInfo, nullptr, &swapChainImageViews[i]) != VK_SUCCESS)
             throw std::runtime_error("failed to create image views!");
     }
+}
+
+void HelloTriangleApplication::createGraphicsPipeline()
+{
+    auto vertShaderCode = readFile("shaders/vert.spv");
+    auto fragShaderCode = readFile("shaders/frag.spv");
 }
 
 bool HelloTriangleApplication::checkValidationLayerSupport()

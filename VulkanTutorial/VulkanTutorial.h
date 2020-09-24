@@ -5,6 +5,7 @@
 
 #include <vector>
 #include <optional>
+#include <string>
 
 struct QueueFamilyIndices {
     std::optional<uint32_t> graphicsFamily;
@@ -32,6 +33,8 @@ private:
 #else
     const bool enableValidationLayers = true;
 #endif
+private:
+    std::vector<char> readFile(const std::string& filename);
 public:
     void run();
 private:
