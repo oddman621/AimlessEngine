@@ -39,6 +39,7 @@ void HelloTriangleApplication::initVulkan() {
     createLogicalDevice();
     createSwapChain();
     createImageViews();
+    createGraphicsPipeline();
 }
 void HelloTriangleApplication::cleanup() {
     for (auto imageView : swapChainImageViews)
