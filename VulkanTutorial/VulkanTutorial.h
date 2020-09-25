@@ -35,6 +35,7 @@ private:
 #endif
 private:
     std::vector<char> readFile(const std::string& filename);
+    VkShaderModule createShaderModule(const std::vector<char>& code);
 public:
     void run();
 private:
