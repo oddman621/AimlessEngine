@@ -53,6 +53,9 @@ private:
     VkQueue graphicsQueue;
     VkQueue presentQueue;
     VkSurfaceKHR surface;
+    VkRenderPass renderPass;
+    VkPipelineLayout pipelineLayout;
+    VkPipeline graphicsPipeline;
 
     VkSwapchainKHR swapChain;
     std::vector<VkImage> swapChainImages;
@@ -91,6 +94,9 @@ private:
     VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities);
     void createSwapChain();
     void createImageViews();
+
+    // RenderPass
+    void createRenderPass();
 
     // Pipeline
     void createGraphicsPipeline();
