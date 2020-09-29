@@ -63,6 +63,9 @@ private:
     VkExtent2D swapChainExtent;
     std::vector<VkImageView> swapChainImageViews;
 
+    std::vector<VkFramebuffer> swapChainFramebuffers;
+    VkCommandPool commandPool;
+
 private:
     // Instance, Extensions
     std::vector<const char*> getRequiredExtensions();
@@ -100,4 +103,10 @@ private:
 
     // Pipeline
     void createGraphicsPipeline();
+
+    // Framebuffer
+    void createFramebuffers();
+
+    // CommandPool
+    void createCommandPool();
 };
