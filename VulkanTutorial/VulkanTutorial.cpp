@@ -104,6 +104,9 @@ void HelloTriangleApplication::createCommandPool()
     poolInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
     poolInfo.queueFamilyIndex = queueFamilyIndices.graphicsFamily.value();
     poolInfo.flags = 0;
+
+    if (vkCreateCommandPool(device, &poolInfo, nullptr, &commandPool) != VK_SUCCESS)
+        throw std::runtime_error("failed to create command pool!");
 }
 
 void HelloTriangleApplication::createFramebuffers()
@@ -131,6 +134,7 @@ void HelloTriangleApplication::createFramebuffers()
 }
 
 void HelloTriangleApplication::cleanup() {
+    vkDestroyCommandPool(device, commandPool, nullptr);
     for (auto framebuffer : swapChainFramebuffers)
         vkDestroyFramebuffer(device, framebuffer, nullptr);
     vkDestroyPipeline(device, graphicsPipeline, nullptr);
