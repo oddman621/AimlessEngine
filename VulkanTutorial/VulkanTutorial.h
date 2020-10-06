@@ -65,6 +65,7 @@ private:
 
     std::vector<VkFramebuffer> swapChainFramebuffers;
     VkCommandPool commandPool;
+    std::vector<VkCommandBuffer> commandBuffers;
 
 private:
     // Instance, Extensions
@@ -107,6 +108,7 @@ private:
     // Framebuffer
     void createFramebuffers();
 
-    // CommandPool
+    // CommandBuffer
     void createCommandPool();
+    void createCommandBuffers();
 };
