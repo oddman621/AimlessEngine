@@ -67,6 +67,9 @@ private:
     VkCommandPool commandPool;
     std::vector<VkCommandBuffer> commandBuffers;
 
+    VkSemaphore imageAvailableSemaphore;
+    VkSemaphore renderFinishedSemaphore;
+
 private:
     // Instance, Extensions
     std::vector<const char*> getRequiredExtensions();
@@ -111,4 +114,10 @@ private:
     // CommandBuffer
     void createCommandPool();
     void createCommandBuffers();
+
+    // Rendering and Presentation
+    void drawFrame();
+
+    // Semaphore
+    void createSemaphores();
 };
