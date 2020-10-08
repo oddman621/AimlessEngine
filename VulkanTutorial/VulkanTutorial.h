@@ -20,6 +20,8 @@ struct SwapChainSupportDetails {
 
 class HelloTriangleApplication {
 private:
+    const int MAX_FRAMES_IN_FLIGHT = 2;
+
     const uint32_t WIDTH = 800;
     const uint32_t HEIGHT = 600;
     const std::vector<const char*> validationLayers = {
@@ -67,8 +69,12 @@ private:
     VkCommandPool commandPool;
     std::vector<VkCommandBuffer> commandBuffers;
 
-    VkSemaphore imageAvailableSemaphore;
-    VkSemaphore renderFinishedSemaphore;
+    //VkSemaphore imageAvailableSemaphore;
+    //VkSemaphore renderFinishedSemaphore;
+    std::vector<VkSemaphore> imageAvailableSemaphores;
+    std::vector<VkSemaphore> renderFinishedSemaphores;
+
+    size_t currentFrame = 0;
 
 private:
     // Instance, Extensions
