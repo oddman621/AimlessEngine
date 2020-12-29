@@ -36,7 +36,7 @@ struct ShaderInfo
 {
 	wstring sourceFile;
 	GLenum shaderType;
-	ShaderInfo() {}
+	ShaderInfo() : sourceFile(L""), shaderType(0) {}
 	ShaderInfo(wstring file, GLenum type) : sourceFile(file), shaderType(type) {}
 };
 
