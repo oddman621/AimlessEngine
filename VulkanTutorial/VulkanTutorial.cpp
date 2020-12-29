@@ -42,7 +42,13 @@ void DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT
 std::vector<char> HelloTriangleApplication::readFile(const std::string& filename)
 {
     std::ifstream file(filename, std::ios::ate | std::ios::binary);
-    if (!file.is_open()) throw std::runtime_error("failed to open file!");
+    if (!file.is_open())
+    {
+        char buf[256];
+        strerror_s<256>(buf, errno);
+        std::cerr << "Error: " << buf << std::endl;
+        throw std::runtime_error("failed to open file!");
+    }
     size_t fileSize = (size_t)file.tellg();
     std::vector<char> buffer(fileSize);
     file.seekg(0);
