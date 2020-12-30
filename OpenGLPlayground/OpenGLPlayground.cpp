@@ -66,7 +66,8 @@ public:
 
 void error_callback(int error, const char* description)
 {
-
+	std::cerr << "GLFW: (" << error << ") " << description << std::endl;
+	throw std::runtime_error("GLFW Failed");
 }
 
 
