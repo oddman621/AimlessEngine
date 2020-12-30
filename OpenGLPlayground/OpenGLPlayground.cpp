@@ -32,61 +32,31 @@ optional<wstring> Load(const wchar_t* filename)
 	return str;
 }
 
-struct ShaderInfo
-{
-	wstring sourceFile;
-	GLenum shaderType;
-	ShaderInfo() : sourceFile(L""), shaderType(0) {}
-	ShaderInfo(wstring file, GLenum type) : sourceFile(file), shaderType(type) {}
-};
 
-class Shader
-{
-	GLint64 shader;
-	ShaderInfo shaderInfo;
-	Shader(ShaderInfo info)
-	{
-		shaderInfo = info;
-		CompileShader();
-	}
-	void CompileShader()
-	{
-		CompileShader(shaderInfo);
-	}
-	void CompileShader(ShaderInfo info)
-	{
-
-	}
-
-	const GLint64 Get()
-	{
-		return shader;
-	}
-};
 
 class ShaderProgram
 {
 	GLint64 program;
-	std::list<ShaderInfo> shaderInfos;
 	std::vector<GLint64> shaders;
-	std::vector<wstring> shaderSources;
+
+public:
+	ShaderProgram()
+	{
+		program = 0; shaders.clear();
+	}
 
 public:
 	bool AddShader(wstring file, GLenum type)
 	{
-		return AddShader(ShaderInfo(file, type));
 	}
-	bool AddShader(ShaderInfo info)
-	{
-
-	}
-	bool AddShader(ShaderInfo* infos)
+	void ClearShader()
 	{
 
 	}
 	void RemoveProgram(bool clearShader = true)
 	{
 
+		if (clearShader) ClearShader();
 	}
 	bool Build()
 	{
