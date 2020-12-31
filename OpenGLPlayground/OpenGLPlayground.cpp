@@ -12,23 +12,23 @@
 
 using namespace std;
 
-optional<wstring> Load(const wchar_t* filename)
+optional<string> Load(const char* filename)
 {
-	wifstream file(filename, ios::in);
-	optional<wstring> str;
+	ifstream file(filename, ios::in);
+	optional<string> str;
 
 	if (file.is_open())
 	{
 		str.emplace();
 		file.seekg(0, ios::end);
-		wstreampos length = file.tellg();
+		streampos length = file.tellg();
 
 		str->resize(length);
 		file.seekg(0, ios::beg);
 		file.read(str->data(), length);
 		file.close();
 	}
-	
+
 	return str;
 }
 
@@ -36,8 +36,8 @@ optional<wstring> Load(const wchar_t* filename)
 
 class ShaderProgram
 {
-	GLint64 program;
-	std::vector<GLint64> shaders;
+	GLuint program;
+	std::vector<GLuint> shaders;
 
 public:
 	ShaderProgram()
@@ -45,9 +45,19 @@ public:
 		program = 0; shaders.clear();
 	}
 
-public:
-	bool AddShader(wstring file, GLenum type)
+	GLuint Get()
 	{
+		return program;
+	}
+
+protected:
+
+public:
+	bool AddShader(string file, GLenum type)
+	{
+		GLuint shader = glCreateShader(type);
+		const GLchar* source = Load(file.c_str())->c_str();
+		glShaderSource(shader, 1, &source, nullptr);
 	}
 	void ClearShader()
 	{
