@@ -69,6 +69,18 @@ protected:
 		if (log_length) log.append("\n");
 		return log;
 	}
+	string GetProgramLog(GLuint program)
+	{
+		string log;
+		GLint log_length;
+		glGetProgramiv(program, GL_INFO_LOG_LENGTH, &log_length);
+		log.resize(log_length);
+
+		glGetProgramInfoLog(program, log_length, NULL, log.data());
+		if (log_length) log.append("\n");
+
+		return log;
+	}
 	void ClearShader()
 	{
 		for (const auto& shader : shaders)
@@ -99,6 +111,7 @@ public:
 			glAttachShader(program, shader.first);
 		}
 		glLinkProgram(program);
+		cout << GetProgramLog(program);
 		ClearShader();
 	}
 };
@@ -134,14 +147,22 @@ int main(void)
 	sp->AddShader("shaders/shader.vert", GL_VERTEX_SHADER);
 	sp->Compile();
 
+	GLuint vao;
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
+
 	while (glfwWindowShouldClose(window) == 0)
 	{
-		glClearColor(0.0f, 0.5f, 0.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		const GLfloat color[4] = {0.1f, 0.1f, 0.1f, 1.0f};
+		glClearBufferfv(GL_COLOR, 0, color);
+		glUseProgram(sp->Get());
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
 
+	glDeleteVertexArrays(1, &vao);
 	delete sp;
 	
 	glfwDestroyWindow(window);
