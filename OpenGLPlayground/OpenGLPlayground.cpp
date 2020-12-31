@@ -9,18 +9,19 @@
 #include <optional>
 #include <vector>
 #include <list>
+#include <map>
+#include <utility>
 
 using namespace std;
 
 string Load(const char* filename)
 {
 	ifstream file(filename, ios::in);
-	optional<string> str;
+	optional<string> str; //optional 쓰고싶었음
 
 	if (file.is_open())
 	{
-		//optional이 실질적으로 객체를 생성해야만 제대로 작동함. emplace는 그 일환으로 호출됨.
-		//Workaround 해결법이므로 실질적 해결방법 찾을 필요 있음
+		//emplace: optional이 객체를 생성해야함
 		str.emplace();
 		file.seekg(0, ios::end);
 		streampos length = file.tellg();
@@ -37,7 +38,7 @@ string Load(const char* filename)
 class ShaderProgram
 {
 	GLuint program;
-	vector<GLuint> shaders;
+	map<GLuint, string> shaders; // map보다 더 나은 자료구조가 있을까?
 
 public:
 	ShaderProgram()
@@ -65,12 +66,13 @@ protected:
 		log.resize(log_length);
 
 		glGetShaderInfoLog(shader, log_length, NULL, log.data());
+		if (log_length) log.append("\n");
 		return log;
 	}
 	void ClearShader()
 	{
-		for (GLuint shader : shaders)
-			glDeleteShader(shader);
+		for (const auto& shader : shaders)
+			glDeleteShader(shader.first);
 		shaders.clear();
 	}
 	void RemoveProgram()
@@ -79,24 +81,22 @@ protected:
 			glDeleteProgram(program);
 	}
 public:
-	//1쉐이더 1파일인데, 이걸 변경할 필요가 있나?
 	void AddShader(string file, GLenum type)
 	{
-		GLuint shader = glCreateShader(type);
-		const GLchar* source = Load(file.c_str()).c_str();
-		glShaderSource(shader, 1, &source, nullptr);
-		shaders.push_back(shader);
+		shaders[glCreateShader(type)] = Load(file.c_str());
 	}
 	void Compile()
 	{
 		RemoveProgram();
 		program = glCreateProgram();
 
-		for (GLuint shader : shaders)
+		for (const auto& shader : shaders)
 		{
-			glCompileShader(shader);
-			cout << GetShaderLog(shader) << endl;
-			glAttachShader(program, shader);
+			const char* source = shader.second.data();
+			glShaderSource(shader.first, 1, &source, nullptr);
+			glCompileShader(shader.first);
+			cout << GetShaderLog(shader.first);
+			glAttachShader(program, shader.first);
 		}
 		glLinkProgram(program);
 		ClearShader();
