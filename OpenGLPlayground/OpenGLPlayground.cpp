@@ -12,13 +12,15 @@
 
 using namespace std;
 
-optional<string> Load(const char* filename)
+string Load(const char* filename)
 {
 	ifstream file(filename, ios::in);
 	optional<string> str;
 
 	if (file.is_open())
 	{
+		//optional이 실질적으로 객체를 생성해야만 제대로 작동함. emplace는 그 일환으로 호출됨.
+		//Workaround 해결법이므로 실질적 해결방법 찾을 필요 있음
 		str.emplace();
 		file.seekg(0, ios::end);
 		streampos length = file.tellg();
@@ -29,20 +31,24 @@ optional<string> Load(const char* filename)
 		file.close();
 	}
 
-	return str;
+	return str.value_or("LOAD_FAILURE");
 }
-
-
 
 class ShaderProgram
 {
 	GLuint program;
-	std::vector<GLuint> shaders;
+	vector<GLuint> shaders;
 
 public:
 	ShaderProgram()
 	{
 		program = 0; shaders.clear();
+	}
+
+	virtual ~ShaderProgram()
+	{
+		RemoveProgram();
+		ClearShader();
 	}
 
 	GLuint Get()
@@ -51,33 +57,56 @@ public:
 	}
 
 protected:
-
-public:
-	bool AddShader(string file, GLenum type)
+	string GetShaderLog(GLuint shader)
 	{
-		GLuint shader = glCreateShader(type);
-		const GLchar* source = Load(file.c_str())->c_str();
-		glShaderSource(shader, 1, &source, nullptr);
+		string log;
+		GLint log_length;
+		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_length);
+		log.resize(log_length);
+
+		glGetShaderInfoLog(shader, log_length, NULL, log.data());
+		return log;
 	}
 	void ClearShader()
 	{
-
+		for (GLuint shader : shaders)
+			glDeleteShader(shader);
+		shaders.clear();
 	}
-	void RemoveProgram(bool clearShader = true)
+	void RemoveProgram()
 	{
-
-		if (clearShader) ClearShader();
+		if (program)
+			glDeleteProgram(program);
 	}
-	bool Build()
+public:
+	//1쉐이더 1파일인데, 이걸 변경할 필요가 있나?
+	void AddShader(string file, GLenum type)
 	{
+		GLuint shader = glCreateShader(type);
+		const GLchar* source = Load(file.c_str()).c_str();
+		glShaderSource(shader, 1, &source, nullptr);
+		shaders.push_back(shader);
+	}
+	void Compile()
+	{
+		RemoveProgram();
+		program = glCreateProgram();
 
+		for (GLuint shader : shaders)
+		{
+			glCompileShader(shader);
+			cout << GetShaderLog(shader) << endl;
+			glAttachShader(program, shader);
+		}
+		glLinkProgram(program);
+		ClearShader();
 	}
 };
 
 void error_callback(int error, const char* description)
 {
-	std::cerr << "GLFW: (" << error << ") " << description << std::endl;
-	throw std::runtime_error("GLFW Failed");
+	cerr << "GLFW: (" << error << ") " << description << endl;
+	throw runtime_error("GLFW Failed");
 }
 
 
@@ -100,6 +129,11 @@ int main(void)
 	glfwMakeContextCurrent(window);
 	if(glewInit() != GLEW_OK) return 0;
 
+	ShaderProgram* sp = new ShaderProgram();
+	sp->AddShader("shaders/shader.frag", GL_FRAGMENT_SHADER);
+	sp->AddShader("shaders/shader.vert", GL_VERTEX_SHADER);
+	sp->Compile();
+
 	while (glfwWindowShouldClose(window) == 0)
 	{
 		glClearColor(0.0f, 0.5f, 0.0f, 1.0f);
@@ -107,6 +141,8 @@ int main(void)
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
+
+	delete sp;
 	
 	glfwDestroyWindow(window);
 	glfwTerminate();
