@@ -8,9 +8,6 @@
 #include <fstream>
 #include <optional>
 #include <vector>
-#include <list>
-#include <map>
-#include <utility>
 
 using namespace std;
 
@@ -38,7 +35,7 @@ string Load(const char* filename)
 class ShaderProgram
 {
 	GLuint program;
-	map<GLuint, string> shaders; // map보다 더 나은 자료구조가 있을까?
+	vector<GLuint> shaders;
 
 public:
 	ShaderProgram()
@@ -78,13 +75,12 @@ protected:
 
 		glGetProgramInfoLog(program, log_length, NULL, log.data());
 		if (log_length) log.append("\n");
-
 		return log;
 	}
 	void ClearShader()
 	{
-		for (const auto& shader : shaders)
-			glDeleteShader(shader.first);
+		for (GLuint shader : shaders)
+			glDeleteShader(shader);
 		shaders.clear();
 	}
 	void RemoveProgram()
@@ -95,28 +91,28 @@ protected:
 public:
 	void AddShader(string file, GLenum type)
 	{
-		shaders[glCreateShader(type)] = Load(file.c_str());
+		GLuint shader = glCreateShader(type);
+		string source = Load(file.c_str());
+		const GLchar* const source_ptr = source.c_str();
+		glShaderSource(shader, 1, &source_ptr, nullptr);
+		glCompileShader(shader);
+		cout << GetShaderLog(shader);
+
+		shaders.push_back(shader);
 	}
 	void Compile()
 	{
 		RemoveProgram();
 		program = glCreateProgram();
-
-		for (const auto& shader : shaders)
-		{
-			const char* source = shader.second.data();
-			glShaderSource(shader.first, 1, &source, nullptr);
-			glCompileShader(shader.first);
-			cout << GetShaderLog(shader.first);
-			glAttachShader(program, shader.first);
-		}
+		for (GLuint shader : shaders)
+			glAttachShader(program, shader);
 		glLinkProgram(program);
 		cout << GetProgramLog(program);
 		ClearShader();
 	}
 };
 
-void error_callback(int error, const char* description)
+void glfwErrorCallback(int error, const char* description)
 {
 	cerr << "GLFW: (" << error << ") " << description << endl;
 	throw runtime_error("GLFW Failed");
@@ -132,7 +128,7 @@ int main(void)
 		return 0;
 	}
 
-	glfwSetErrorCallback(error_callback);
+	glfwSetErrorCallback(glfwErrorCallback);
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
