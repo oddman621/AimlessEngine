@@ -92,13 +92,12 @@ public:
 	void AddShader(string file, GLenum type)
 	{
 		GLuint shader = glCreateShader(type);
-		string source = Load(file.c_str());
-		const GLchar* const source_ptr = source.c_str();
-		glShaderSource(shader, 1, &source_ptr, nullptr);
+		const GLchar* source = _strdup(Load(file.c_str()).c_str());
+		glShaderSource(shader, 1, &source, nullptr);
 		glCompileShader(shader);
 		cout << GetShaderLog(shader);
-
 		shaders.push_back(shader);
+		delete source;
 	}
 	void Compile()
 	{
