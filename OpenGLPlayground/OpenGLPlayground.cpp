@@ -89,10 +89,10 @@ protected:
 			glDeleteProgram(program);
 	}
 public:
-	void AddShader(GLenum type, const string&& file)
+	void AddShader(GLenum type, const char* file)
 	{
 		GLuint shader = glCreateShader(type);
-		const string&& sourceStr = Load(file.c_str());
+		const string&& sourceStr = Load(file);
 		const GLchar* source = sourceStr.data();
 		glShaderSource(shader, 1, &source, nullptr);
 		glCompileShader(shader);
