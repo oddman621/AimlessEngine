@@ -89,7 +89,7 @@ protected:
 			glDeleteProgram(program);
 	}
 public:
-	void AddShader(string&& file, GLenum type)
+	void AddShader(GLenum type, const string&& file)
 	{
 		GLuint shader = glCreateShader(type);
 		const string&& sourceStr = Load(file.c_str());
@@ -138,8 +138,8 @@ int main(void)
 	if(glewInit() != GLEW_OK) return 0;
 
 	ShaderProgram* sp = new ShaderProgram();
-	sp->AddShader("shaders/shader.frag", GL_FRAGMENT_SHADER);
-	sp->AddShader("shaders/shader.vert", GL_VERTEX_SHADER);
+	sp->AddShader(GL_FRAGMENT_SHADER, "shaders/shader.frag");
+	sp->AddShader(GL_VERTEX_SHADER, "shaders/shader.vert");
 	sp->Compile();
 
 	GLuint vao;
