@@ -89,7 +89,7 @@ protected:
 			glDeleteProgram(program);
 	}
 public:
-	void AddShader(string file, GLenum type)
+	void AddShader(string&& file, GLenum type)
 	{
 		GLuint shader = glCreateShader(type);
 		const string&& sourceStr = Load(file.c_str());
