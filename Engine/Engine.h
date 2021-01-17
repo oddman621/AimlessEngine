@@ -14,7 +14,7 @@ class ShaderProgram
 	vector<GLuint> shaders;
 
 public:
-	enum Type
+	enum class Type
 	{
 		Auto, 
 		Vertex, Fragment
@@ -44,7 +44,7 @@ protected:
 	void RemoveProgram();
 	void AddShader(GLenum type, const char* file);
 public:
-	void AddShader(const char* file, Type type = Auto);
+	void AddShader(const char* file, Type type = Type::Auto);
 	void Compile();
 };
 

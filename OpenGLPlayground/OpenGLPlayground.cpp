@@ -33,8 +33,8 @@ int main(void)
 	if(glewInit() != GLEW_OK) return 0;
 
 	ShaderProgram* sp = new ShaderProgram();
-	sp->AddShader("shaders/shader.vert", ShaderProgram::Vertex);
-	sp->AddShader("shaders/shader.frag", ShaderProgram::Fragment);
+	sp->AddShader("shaders/shader.vert", ShaderProgram::Type::Vertex);
+	sp->AddShader("shaders/shader.frag", ShaderProgram::Type::Fragment);
 	sp->Compile();
 
 	GLuint vao;
