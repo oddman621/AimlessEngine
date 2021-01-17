@@ -96,13 +96,13 @@ void ShaderProgram::Compile()
 	ClearShader();
 }
 
-void Engine::glfwErrorCallback(int error, const char* description)
+void EngineHelper::glfwErrorCallback(int error, const char* description)
 {
 	cerr << "GLFW: (" << error << ") " << description << endl;
 	throw runtime_error("GLFW Failed");
 }
 
-GLFWwindow* Engine::CreateWindow(const char* title, int width, int height, int OpenGLmajor, int OpenGLminor)
+GLFWwindow* EngineHelper::CreateWindow(const char* title, int width, int height, int OpenGLmajor, int OpenGLminor)
 {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, OpenGLmajor);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, OpenGLminor);

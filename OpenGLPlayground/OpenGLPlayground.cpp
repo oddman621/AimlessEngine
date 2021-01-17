@@ -21,12 +21,11 @@ int main(void)
 		return 0;
 	}
 
-	glfwSetErrorCallback(Engine::glfwErrorCallback);
+	glfwSetErrorCallback(EngineHelper::glfwErrorCallback);
 
-	
-	GLFWwindow* window = Engine::CreateWindow("OpenGLPlayground");
-
+	GLFWwindow* window = EngineHelper::CreateWindow("OpenGLPlayground");
 	glfwMakeContextCurrent(window);
+
 	if(glewInit() != GLEW_OK) return 0;
 
 	ShaderProgram* sp = new ShaderProgram();
