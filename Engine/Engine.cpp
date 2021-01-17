@@ -86,7 +86,8 @@ void ShaderProgram::AddShader(const char* file, Type type)
 		AddShader(GL_FRAGMENT_SHADER, file);
 		break;
 	case Type::Auto:
-		AddShader(file, extensionMap[filesystem::path(file).extension().u8string()]);
+		const string&& extension = filesystem::path(file).extension().u8string();
+		AddShader(file, extensionMap[extension]);
 		break;
 	}
 }
