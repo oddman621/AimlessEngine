@@ -13,7 +13,6 @@
 
 using namespace std;
 
-// TODO: glfw/glew 의존성을 Engine으로 이주
 int main(void)
 {
 	if (glfwInit() == GLFW_FALSE)
