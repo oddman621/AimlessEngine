@@ -72,19 +72,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)Lua53;$(SolutionDir)glfw33;$(SolutionDir)glew210;$(SolutionDir)Dalbit\dalbit;$(SolutionDir)include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Engine;$(SolutionDir)Lua53;$(SolutionDir)glfw33;$(SolutionDir)glew210;$(SolutionDir)Dalbit\dalbit;$(SolutionDir)include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)Lua53;$(SolutionDir)glfw33;$(SolutionDir)glew210;$(SolutionDir)Dalbit\dalbit;$(SolutionDir)include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Engine;$(SolutionDir)Lua53;$(SolutionDir)glfw33;$(SolutionDir)glew210;$(SolutionDir)Dalbit\dalbit;$(SolutionDir)include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)Lua53;$(SolutionDir)glfw33;$(SolutionDir)glew210;$(SolutionDir)Dalbit\dalbit;$(SolutionDir)include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Engine;$(SolutionDir)Lua53;$(SolutionDir)glfw33;$(SolutionDir)glew210;$(SolutionDir)Dalbit\dalbit;$(SolutionDir)include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)Lua53;$(SolutionDir)glfw33;$(SolutionDir)glew210;$(SolutionDir)Dalbit\dalbit;$(SolutionDir)include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Engine;$(SolutionDir)Lua53;$(SolutionDir)glfw33;$(SolutionDir)glew210;$(SolutionDir)Dalbit\dalbit;$(SolutionDir)include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -153,6 +153,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Dalbit\Dalbit.vcxproj">
       <Project>{ae9a26f6-d709-4008-9aaf-f0ecb468f253}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Engine\Engine.vcxproj">
+      <Project>{57d525a5-099f-460d-8d9f-d87af9c24e3e}</Project>
     </ProjectReference>
     <ProjectReference Include="..\glew210\glew210.vcxproj">
       <Project>{ec76fa1a-9202-4120-a607-7495954e3931}</Project>
