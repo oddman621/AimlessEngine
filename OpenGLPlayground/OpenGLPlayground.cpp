@@ -15,18 +15,7 @@ using namespace std;
 
 int main(void)
 {
-	if (glfwInit() == GLFW_FALSE)
-	{
-		wcout << L"Failed to init GLFW!" << endl;
-		return 0;
-	}
-
-	glfwSetErrorCallback(EngineHelper::glfwErrorCallback);
-
-	GLFWwindow* window = EngineHelper::CreateWindow("OpenGLPlayground");
-	glfwMakeContextCurrent(window);
-
-	if(glewInit() != GLEW_OK) return 0;
+	GLFWwindow* window = EngineHelper::GLInit("OpenGLPlayground");
 
 	ShaderProgram* sp = new ShaderProgram();
 	sp->AddShader("shaders/shader.vert");

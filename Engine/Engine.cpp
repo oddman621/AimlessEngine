@@ -8,12 +8,11 @@ using namespace std;
 string EngineHelper::LoadFile(const char* filename)
 {
 	ifstream file(filename, ios::in);
-	optional<string> str; //optional 쓰고싶었음
+	optional<string> str;
 
 	if (file.is_open())
 	{
-		//emplace: optional이 객체를 생성해야함
-		str.emplace();
+		str.emplace();//emplace: optional이 객체를 생성해야함
 		file.seekg(0, ios::end);
 		streampos length = file.tellg();
 
@@ -108,6 +107,35 @@ GLFWwindow* EngineHelper::CreateWindow(const char* title, int width, int height,
 	
 	if (!window)
 		wcerr << L"Engine::CreateWindow : Failed to create glfwWindow!" << endl;
+
+	return window;
+}
+
+GLFWwindow* EngineHelper::GLInit(const char* title)
+{
+	if (glfwInit() == GLFW_FALSE)
+	{
+		wcout << L"EngineHelper::GLInit : Failed to init GLFW!" << endl;
+		return nullptr;
+	}
+
+	glfwSetErrorCallback(EngineHelper::glfwErrorCallback);
+
+	GLFWwindow* window = EngineHelper::CreateWindow("OpenGLPlayground");
+	
+	if (!window)
+	{
+		wcout << L"EngineHelper::GLinit : Failed to Create GLFWwindow!" << endl;
+		return nullptr;
+	}
+
+	glfwMakeContextCurrent(window);
+	if (glewInit() != GLEW_OK)
+	{
+		wcout << L"EngineHelper::GLInit : Failed to init GLEW!" << endl;
+		glfwDestroyWindow(window);
+		return nullptr;
+	}
 
 	return window;
 }
