@@ -96,7 +96,7 @@ void ShaderProgram::Compile()
 	ClearShader();
 }
 
-void glfwErrorCallback(int error, const char* description)
+void Engine::glfwErrorCallback(int error, const char* description)
 {
 	cerr << "GLFW: (" << error << ") " << description << endl;
 	throw runtime_error("GLFW Failed");

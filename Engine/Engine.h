@@ -7,7 +7,6 @@
 
 using namespace std;
 
-string Load(const char* filename);
 class ShaderProgram
 {
 	GLuint program;
@@ -48,4 +47,8 @@ public:
 	void Compile();
 };
 
-void glfwErrorCallback(int error, const char* description);
+
+namespace Engine
+{
+	void glfwErrorCallback(int error, const char* description);
+}
