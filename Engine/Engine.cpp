@@ -60,7 +60,7 @@ void ShaderProgram::RemoveProgram()
 		glDeleteProgram(program);
 }
 
-void ShaderProgram::AddShader(GLenum type, const char* file)
+void ShaderProgram::AddShader(const char* file, GLenum type)
 {
 	GLuint shader = glCreateShader(type);
 	const string&& sourceStr = EngineHelper::LoadFile(file);
@@ -70,26 +70,19 @@ void ShaderProgram::AddShader(GLenum type, const char* file)
 	cout << GetShaderLog(shader);
 	shaders.push_back(shader);
 }
-void ShaderProgram::AddShader(const char* file, Type type)
+
+void ShaderProgram::AddShader(const char* file)
 {
-	static map<string, Type> extensionMap = {
-		make_pair(".vert", Type::Vertex),
-		make_pair(".frag", Type::Fragment)
+	static map<string, GLenum> extensionMap = {
+		make_pair(".vert", GL_VERTEX_SHADER),
+		make_pair(".frag", GL_FRAGMENT_SHADER)
 	};
 
-	static map<Type, GLenum> typeMap = {
-		make_pair(Type::Vertex, GL_VERTEX_SHADER),
-		make_pair(Type::Fragment, GL_FRAGMENT_SHADER)
-	};
+	const string&& extension = filesystem::path(file).extension().u8string();
 
-	if (type == Type::Auto)
-	{
-		const string&& extension = filesystem::path(file).extension().u8string();
-		type = extensionMap[extension];
-	}
-
-	AddShader(typeMap[type], file);
+	AddShader(file, extensionMap[extension]);
 }
+
 void ShaderProgram::Compile()
 {
 	RemoveProgram();
