@@ -77,19 +77,18 @@ void ShaderProgram::AddShader(const char* file, Type type)
 		make_pair(".frag", Type::Fragment)
 	};
 
-	switch (type)
+	static map<Type, GLenum> typeMap = {
+		make_pair(Type::Vertex, GL_VERTEX_SHADER),
+		make_pair(Type::Fragment, GL_FRAGMENT_SHADER)
+	};
+
+	if (type == Type::Auto)
 	{
-	case Type::Vertex:
-		AddShader(GL_VERTEX_SHADER, file);
-		break;
-	case Type::Fragment:
-		AddShader(GL_FRAGMENT_SHADER, file);
-		break;
-	case Type::Auto:
 		const string&& extension = filesystem::path(file).extension().u8string();
-		AddShader(file, extensionMap[extension]);
-		break;
+		type = extensionMap[extension];
 	}
+
+	AddShader(typeMap[type], file);
 }
 void ShaderProgram::Compile()
 {
