@@ -102,3 +102,15 @@ void Engine::glfwErrorCallback(int error, const char* description)
 	throw runtime_error("GLFW Failed");
 }
 
+GLFWwindow* Engine::CreateWindow(const char* title, int width, int height, int OpenGLmajor, int OpenGLminor)
+{
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, OpenGLmajor);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, OpenGLminor);
+	GLFWwindow* window = glfwCreateWindow(width, height, title, nullptr, nullptr);
+	
+	if (!window)
+		wcerr << L"Engine::CreateWindow : Failed to create glfwWindow!" << endl;
+
+	return window;
+}
+

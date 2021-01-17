@@ -51,4 +51,5 @@ public:
 namespace Engine
 {
 	void glfwErrorCallback(int error, const char* description);
+	GLFWwindow* CreateWindow(const char* title, int width = 1280, int height = 720, int OpenGLmajor = 4, int OpenGLminor = 6);
 }

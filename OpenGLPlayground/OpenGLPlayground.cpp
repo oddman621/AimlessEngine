@@ -23,10 +23,8 @@ int main(void)
 
 	glfwSetErrorCallback(Engine::glfwErrorCallback);
 
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
-	GLFWwindow* window = glfwCreateWindow(1280, 720, "OpenGLPlayground", nullptr, nullptr);
-	if (!window) return 0;
+	
+	GLFWwindow* window = Engine::CreateWindow("OpenGLPlayground");
 
 	glfwMakeContextCurrent(window);
 	if(glewInit() != GLEW_OK) return 0;
