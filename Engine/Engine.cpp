@@ -5,7 +5,7 @@
 
 using namespace std;
 
-string Load(const char* filename)
+string EngineHelper::LoadFile(const char* filename)
 {
 	ifstream file(filename, ios::in);
 	optional<string> str; //optional 쓰고싶었음
@@ -63,7 +63,7 @@ void ShaderProgram::RemoveProgram()
 void ShaderProgram::AddShader(GLenum type, const char* file)
 {
 	GLuint shader = glCreateShader(type);
-	const string&& sourceStr = Load(file);
+	const string&& sourceStr = EngineHelper::LoadFile(file);
 	const GLchar* source = sourceStr.data();
 	glShaderSource(shader, 1, &source, nullptr);
 	glCompileShader(shader);
