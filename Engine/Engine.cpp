@@ -72,6 +72,11 @@ void ShaderProgram::AddShader(GLenum type, const char* file)
 }
 void ShaderProgram::AddShader(const char* file, Type type)
 {
+	static map<string, Type> extensionMap = {
+		make_pair(".vert", Type::Vertex),
+		make_pair(".frag", Type::Fragment)
+	};
+
 	switch (type)
 	{
 	case Type::Vertex:
@@ -80,8 +85,8 @@ void ShaderProgram::AddShader(const char* file, Type type)
 	case Type::Fragment:
 		AddShader(GL_FRAGMENT_SHADER, file);
 		break;
-	case Type::Auto: // TODO: 셰이더 타입 자동추론기능
-		wcerr << L"AddShader: 현재 셰이더 자동추론기능이 없습니다." << endl;
+	case Type::Auto:
+		AddShader(file, extensionMap[filesystem::path(file).extension().u8string()]);
 		break;
 	}
 }
