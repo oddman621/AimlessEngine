@@ -13,6 +13,7 @@
 
 using namespace std;
 
+// TODO: glfw/glew 의존성을 Engine으로 이주
 int main(void)
 {
 	if (glfwInit() == GLFW_FALSE)
@@ -32,8 +33,8 @@ int main(void)
 	if(glewInit() != GLEW_OK) return 0;
 
 	ShaderProgram* sp = new ShaderProgram();
-	sp->AddShader(GL_FRAGMENT_SHADER, "shaders/shader.frag");
-	sp->AddShader(GL_VERTEX_SHADER, "shaders/shader.vert");
+	sp->AddShader("shaders/shader.vert", ShaderProgram::Vertex);
+	sp->AddShader("shaders/shader.frag", ShaderProgram::Fragment);
 	sp->Compile();
 
 	GLuint vao;

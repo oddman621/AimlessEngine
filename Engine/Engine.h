@@ -14,6 +14,13 @@ class ShaderProgram
 	vector<GLuint> shaders;
 
 public:
+	enum Type
+	{
+		Auto, 
+		Vertex, Fragment
+	};
+
+public:
 	ShaderProgram()
 	{
 		program = 0; shaders.clear();
@@ -35,8 +42,9 @@ protected:
 	string GetProgramLog(GLuint program);
 	void ClearShader();
 	void RemoveProgram();
-public:
 	void AddShader(GLenum type, const char* file);
+public:
+	void AddShader(const char* file, Type type = Auto);
 	void Compile();
 };
 

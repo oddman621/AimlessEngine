@@ -151,20 +151,8 @@
     <ClCompile Include="OpenGLPlayground.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Dalbit\Dalbit.vcxproj">
-      <Project>{ae9a26f6-d709-4008-9aaf-f0ecb468f253}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\Engine\Engine.vcxproj">
       <Project>{57d525a5-099f-460d-8d9f-d87af9c24e3e}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\glew210\glew210.vcxproj">
-      <Project>{ec76fa1a-9202-4120-a607-7495954e3931}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\glfw33\glfw33.vcxproj">
-      <Project>{cb6d5db9-0c30-47a4-ae95-e827be109dc5}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Lua53\Lua53.vcxproj">
-      <Project>{1daca6f5-a619-49a0-acd6-cfce908435b2}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

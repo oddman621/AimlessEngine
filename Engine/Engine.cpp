@@ -70,6 +70,24 @@ void ShaderProgram::AddShader(GLenum type, const char* file)
 	cout << GetShaderLog(shader);
 	shaders.push_back(shader);
 }
+void ShaderProgram::AddShader(const char* file, Type type)
+{
+	switch (type)
+	{
+	case Vertex:
+		AddShader(GL_VERTEX_SHADER, file);
+		break;
+	case Fragment:
+		AddShader(GL_FRAGMENT_SHADER, file);
+		break;
+	case Auto: // TODO: 셰이더 타입 자동추론기능
+		wcerr << L"AddShader: 현재 셰이더 자동추론기능이 없습니다." << endl;
+		break;
+	default:
+		wcerr << L"AddShader: 알 수 없는 셰이더 타입입니다." << endl;
+		break;
+	}
+}
 void ShaderProgram::Compile()
 {
 	RemoveProgram();
