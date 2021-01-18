@@ -70,16 +70,19 @@ void ShaderProgram::AddShader(const char* file, GLenum type)
 	shaders.push_back(shader);
 }
 
-void ShaderProgram::AddShader(const char* file)
+GLenum ShaderProgram::GetShaderType(const char* file)
 {
 	static map<string, GLenum> extensionMap = {
 		make_pair(".vert", GL_VERTEX_SHADER),
 		make_pair(".frag", GL_FRAGMENT_SHADER)
 	};
 
-	const string&& extension = filesystem::path(file).extension().u8string();
+	return extensionMap[filesystem::path(file).extension().u8string()];
+}
 
-	AddShader(file, extensionMap[extension]);
+void ShaderProgram::AddShader(const char* file)
+{
+	AddShader(file, GetShaderType(file));
 }
 
 void ShaderProgram::Compile()

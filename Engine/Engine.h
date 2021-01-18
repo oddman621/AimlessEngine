@@ -35,6 +35,7 @@ protected:
 	void ClearShader();
 	void RemoveProgram();
 	void AddShader(const char* file, GLenum type);
+	GLenum GetShaderType(const char* file);
 public:
 	void AddShader(const char* file);
 	void Compile();
