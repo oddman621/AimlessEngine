@@ -17,6 +17,8 @@ int main(void)
 {
 	GLFWwindow* window = EngineHelper::GLInit("OpenGLPlayground");
 
+	if (!window) return 1;
+
 	ShaderProgram* sp = new ShaderProgram();
 	sp->AddShader("shaders/shader.vert");
 	sp->AddShader("shaders/shader.frag");
