@@ -103,10 +103,8 @@ GLFWwindow* EngineHelper::CreateWindow(const char* title, int width, int height,
 {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, OpenGLmajor);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, OpenGLminor);
+
 	GLFWwindow* window = glfwCreateWindow(width, height, title, nullptr, nullptr);
-	
-	if (!window)
-		wcerr << L"Engine::CreateWindow : Failed to create glfwWindow!" << endl;
 
 	return window;
 }
@@ -124,17 +122,16 @@ GLFWwindow* EngineHelper::GLInit(const char* title)
 	GLFWwindow* window = EngineHelper::CreateWindow("OpenGLPlayground");
 	
 	if (!window)
-	{
 		wcout << L"EngineHelper::GLinit : Failed to Create GLFWwindow!" << endl;
-		return nullptr;
-	}
-
-	glfwMakeContextCurrent(window);
-	if (glewInit() != GLEW_OK)
+	else
 	{
-		wcout << L"EngineHelper::GLInit : Failed to init GLEW!" << endl;
-		glfwDestroyWindow(window);
-		return nullptr;
+		glfwMakeContextCurrent(window);
+		if (glewInit() != GLEW_OK)
+		{
+			wcout << L"EngineHelper::GLInit : Failed to init GLEW!" << endl;
+			glfwDestroyWindow(window);
+			window = nullptr;
+		}
 	}
 
 	return window;
