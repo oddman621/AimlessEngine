@@ -103,6 +103,7 @@ GLFWwindow* EngineHelper::CreateWindow(const char* title, int width, int height,
 {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, OpenGLmajor);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, OpenGLminor);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	GLFWwindow* window = glfwCreateWindow(width, height, title, nullptr, nullptr);
 
