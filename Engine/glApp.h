@@ -10,9 +10,7 @@ class glApp
 private:
 	static bool glfw_initialized;
 	static bool glew_initialized;
-	static int appCount;
-protected:
-	struct GLFWwindow* window;
+	static struct GLFWwindow* window;
 public:
 	glApp() : glApp(DEFAULT_TITLE, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_GLMAJOR, DEFAULT_GLMINOR) {}
 	glApp(const char* title) : glApp(title, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_GLMAJOR, DEFAULT_GLMINOR) {}

@@ -5,7 +5,7 @@
 
 bool glApp::glfw_initialized = false;
 bool glApp::glew_initialized = false;
-int glApp::appCount = 0;
+GLFWwindow* glApp::window = nullptr;
 
 glApp::glApp(const char* title, int width, int height, int glMajor, int glMinor)
 {
@@ -17,9 +17,7 @@ glApp::glApp(const char* title, int width, int height, int glMajor, int glMinor)
 	glfwSetErrorCallback(EngineHelper::glfwErrorCallback);
 
 	window = EngineHelper::CreateWindow(title, width, height, glMajor, glMinor);
-	appCount += 1;
 
-	// NOTE: 복수의 glApp 운용이 어려울 것으로 보이는 코드로 수정할 가능성이 높은 부분
 	glfwMakeContextCurrent(window);
 	if (!glew_initialized)
 	{
@@ -32,10 +30,7 @@ glApp::glApp(const char* title, int width, int height, int glMajor, int glMinor)
 glApp::~glApp()
 {
 	glfwDestroyWindow(window);
-	appCount -= 1;
-	if (appCount == 0)
-	{
-		glfwTerminate();
-		glfw_initialized = false;
-	}
+	window = nullptr;
+	glfwTerminate();
+	glfw_initialized = false;
 }
