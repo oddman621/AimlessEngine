@@ -1,11 +1,5 @@
 #pragma once
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-
-#define GLAPP_CLASS Triangle
-
-
 class glApp
 {
 	static inline const char* const DEFAULT_TITLE = "glApp";
@@ -29,14 +23,4 @@ public:
 	virtual void Startup() = 0;
 	virtual void Loop() = 0;
 	virtual void Cleanup() = 0;
-};
-
-class Triangle : public glApp
-{
-	class ShaderProgram* sp;
-	GLuint vao;
-public:
-	void Startup();
-	void Loop();
-	void Cleanup();
 };
