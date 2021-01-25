@@ -137,6 +137,7 @@ GLFWwindow* EngineHelper::GLInit(const char* title, int width, int height, int O
 			glfwDestroyWindow(window);
 			window = nullptr;
 		}
+		glfwSwapInterval(1);
 	}
 
 	return window;
