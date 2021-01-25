@@ -26,6 +26,7 @@ glApp::glApp(const char* title, int width, int height, int glMajor, int glMinor)
 		glewInit();
 		glew_initialized = true;
 	}
+	glfwSwapInterval(1);
 }
 
 glApp::~glApp()
