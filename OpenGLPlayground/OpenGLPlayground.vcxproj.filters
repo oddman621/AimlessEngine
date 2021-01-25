@@ -13,10 +13,32 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{fcd50c1f-0895-4066-bae1-971307307fb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Apps">
+      <UniqueIdentifier>{e72dc406-8883-44ef-86a3-530fc53fb31e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="OpenGLPlayground.cpp">
+    <None Include="shaders\Triangle.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\Triangle.vert">
+      <Filter>shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="glApp.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Triangle.cpp">
+      <Filter>소스 파일\Apps</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
