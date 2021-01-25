@@ -1,8 +1,5 @@
 ﻿#include "Apps.h"
 
-
-
-
 int main(void)
 {
 	glApp* app = new GLAPP_CLASS();

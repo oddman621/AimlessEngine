@@ -10,8 +10,6 @@ class glApp
 	static inline const int DEFAULT_GLMAJOR = 4;
 	static inline const int DEFAULT_GLMINOR = 6;
 private:
-	static bool glfw_initialized;
-	static bool glew_initialized;
 	static GLFWwindow* window;
 public:
 	glApp() : glApp(DEFAULT_TITLE, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_GLMAJOR, DEFAULT_GLMINOR) {}
