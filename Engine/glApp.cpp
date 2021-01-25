@@ -20,12 +20,13 @@ glApp::~glApp()
 	glfwTerminate();
 }
 
+// C++11 표준 Chrono가 간편하고 성능이 상당히 좋다고 하여 사용함
 void glApp::Loop()
 {
-	auto prevTime = chrono::system_clock::now();
+	chrono::system_clock::time_point prevTime = chrono::system_clock::now();
 	while (glfwWindowShouldClose(window) == 0)
 	{
-		auto currTime = chrono::system_clock::now();
+		chrono::system_clock::time_point currTime = chrono::system_clock::now();
 		chrono::duration<float> deltaTime = currTime - prevTime;
 		OnLoop(deltaTime.count());
 
