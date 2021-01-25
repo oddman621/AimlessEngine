@@ -3,12 +3,6 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
-#include <iostream>
-#include <string>
-#include <fstream>
-#include <optional>
-#include <vector>
-
 #include <Engine.h>
 
 using namespace std;

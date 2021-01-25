@@ -1,9 +1,11 @@
 #pragma once
 
-// pch에 포함되어 해당 forward declaration이 필요없어진 것으로 보임... 정확한 이유는 모름
-//typedef GLuint;
-//typedef GLenum;
-//class string;
+// NOTE: 어째서 forward declaration 없이 잘 인식하고 빌드되는 걸까?
+//typename GLuint;
+//typename GLenum;
+
+#include <string>
+#include <vector>
 
 using namespace std;
 
