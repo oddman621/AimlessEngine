@@ -161,7 +161,7 @@
     <None Include="shaders\Triangle.vert" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Apps.h" />
+    <ClInclude Include="Application.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

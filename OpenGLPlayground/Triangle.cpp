@@ -1,7 +1,10 @@
-#include "Apps.h"
+#include "Application.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <Engine.h>
+
+ShaderProgram* sp;
+GLuint vao;
 
 void Triangle::Startup()
 {
