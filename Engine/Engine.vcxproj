@@ -159,12 +159,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Engine.h" />
     <ClInclude Include="glApp.h" />
+    <ClInclude Include="Helper.h" />
+    <ClInclude Include="ShaderProgram.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Engine.cpp" />
     <ClCompile Include="glApp.cpp" />
+    <ClCompile Include="Helper.cpp" />
+    <ClCompile Include="ShaderProgram.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dalbit\Dalbit.vcxproj">

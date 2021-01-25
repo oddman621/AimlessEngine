@@ -1,15 +1,16 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <Engine.h>
+#include <ShaderProgram.h>
 
 #include "Application.h"
 
-ShaderProgram* sp;
+
+AE::ShaderProgram* sp;
 GLuint vao;
 
 STARTUP(Triangle)
 {
-	sp = new ShaderProgram();
+	sp = new AE::ShaderProgram();
 	sp->AddShader("shaders/Triangle.vert");
 	sp->AddShader("shaders/Triangle.frag");
 	sp->Compile();
