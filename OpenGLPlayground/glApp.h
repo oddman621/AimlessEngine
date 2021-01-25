@@ -15,7 +15,11 @@ public:
 	glApp(const char* title, int width, int height) : glApp(title, width, height, 4, 6) {}
 	glApp(const char* title, int width, int height, int glMajor, int glMinor)
 	{
-		if (!init) glfwInit();
+		if (!init)
+		{
+			glfwInit();
+			init = true;
+		}
 		window = EngineHelper::CreateWindow(title, width, height, glMajor, glMinor);
 		appCount += 1;
 	}
