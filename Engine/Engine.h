@@ -1,8 +1,8 @@
 #pragma once
 
-// NOTE: 어째서 forward declaration 없이 잘 인식하고 빌드되는 걸까?
-//typename GLuint;
-//typename GLenum;
+typedef GLuint;
+typedef GLenum;
+struct GLFWwindow;
 
 #include <string>
 #include <vector>

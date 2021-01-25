@@ -1,7 +1,15 @@
 ﻿// Engine.cpp : 정적 라이브러리를 위한 함수를 정의합니다.
 //
 
-#include "pch.h"
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <optional>
+#include <vector>
+#include <filesystem>
+#include <map>
 #include "Engine.h"
 
 using namespace std;
