@@ -1,54 +1,41 @@
 #pragma once
 
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <Engine.h>
+
+#define GLAPP_CLASS Triangle
+
 
 class glApp
 {
+	static inline const char* const DEFAULT_TITLE = "glApp";
+	static inline const int DEFAULT_WIDTH = 1280;
+	static inline const int DEFAULT_HEIGHT = 720;
+	static inline const int DEFAULT_GLMAJOR = 4;
+	static inline const int DEFAULT_GLMINOR = 6;
 private:
-	static bool init;
+	static bool glfw_initialized;
+	static bool glew_initialized;
 	static int appCount;
-	const char* const DEFAULT_TITLE = "glApp";
-	const int DEFAULT_WIDTH = 1280;
-	const int DEFAULT_HEIGHT = 720;
-	const int DEFAULT_GLMAJOR = 4;
-	const int DEFAULT_GLMINOR = 6;
 protected:
-	GLFWwindow* window;
+	struct GLFWwindow* window;
 public:
 	glApp() : glApp(DEFAULT_TITLE, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_GLMAJOR, DEFAULT_GLMINOR) {}
 	glApp(const char* title) : glApp(title, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_GLMAJOR, DEFAULT_GLMINOR) {}
 	glApp(const char* title, int width, int height) : glApp(title, width, height, DEFAULT_GLMAJOR, DEFAULT_GLMINOR) {}
-	glApp(const char* title, int width, int height, int glMajor, int glMinor)
-	{
-		if (!init)
-		{
-			glfwInit();
-			init = true;
-		}
-		window = EngineHelper::CreateWindow(title, width, height, glMajor, glMinor);
-		appCount += 1;
-	}
-	virtual ~glApp()
-	{
-		glfwDestroyWindow(window);
-		appCount -= 1;
-		if (appCount == 0) 
-		{ 
-			glfwTerminate(); 
-			init = false;
-		}
-	}
+	glApp(const char* title, int width, int height, int glMajor, int glMinor);
+	virtual ~glApp();
 public:
 	virtual void Startup() = 0;
 	virtual void Loop() = 0;
 	virtual void Cleanup() = 0;
 };
-bool glApp::init = false;
-int glApp::appCount = 0;
 
 class Triangle : public glApp
 {
+	class ShaderProgram* sp;
+	GLuint vao;
+public:
 	void Startup();
 	void Loop();
 	void Cleanup();

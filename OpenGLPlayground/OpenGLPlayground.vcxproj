@@ -148,6 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="glApp.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Triangle.cpp" />
   </ItemGroup>

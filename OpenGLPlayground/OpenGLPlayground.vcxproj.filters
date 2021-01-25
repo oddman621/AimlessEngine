@@ -40,5 +40,8 @@
     <ClCompile Include="Triangle.cpp">
       <Filter>소스 파일\Apps</Filter>
     </ClCompile>
+    <ClCompile Include="glApp.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
