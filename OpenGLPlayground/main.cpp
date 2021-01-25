@@ -8,6 +8,7 @@ int main(void)
 	app->Startup();
 	app->Loop();
 	app->Cleanup();
+	delete app;
 
 	return 0;
 }
