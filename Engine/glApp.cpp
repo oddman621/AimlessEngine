@@ -22,11 +22,15 @@ glApp::~glApp()
 
 void glApp::Loop()
 {
+	auto prevTime = chrono::system_clock::now();
 	while (glfwWindowShouldClose(window) == 0)
 	{
-		OnLoop(0.0f);
+		auto currTime = chrono::system_clock::now();
+		chrono::duration<float> deltaTime = currTime - prevTime;
+		OnLoop(deltaTime.count());
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+		prevTime = currTime;
 	}
 }

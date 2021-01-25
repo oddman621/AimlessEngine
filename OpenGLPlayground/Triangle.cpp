@@ -1,7 +1,8 @@
-#include "Application.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <Engine.h>
+
+#include "Application.h"
 
 ShaderProgram* sp;
 GLuint vao;
