@@ -6,8 +6,6 @@ bool glApp::glfw_initialized = false;
 bool glApp::glew_initialized = false;
 int glApp::appCount = 0;
 
-#include <iostream>
-
 glApp::glApp(const char* title, int width, int height, int glMajor, int glMinor)
 {
 	if (!glfw_initialized)
