@@ -124,7 +124,7 @@ GLFWwindow* EngineHelper::GLInit(const char* title, int width, int height, int O
 
 	glfwSetErrorCallback(EngineHelper::glfwErrorCallback);
 
-	GLFWwindow* window = EngineHelper::CreateWindow("OpenGLPlayground", width, height, OpenGLmajor, OpenGLminor);
+	GLFWwindow* window = EngineHelper::CreateWindow(title , width, height, OpenGLmajor, OpenGLminor);
 	
 	if (!window)
 		cerr << "EngineHelper::GLinit : Failed to Create GLFWwindow!" << endl;
