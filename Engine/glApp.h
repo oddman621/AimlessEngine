@@ -17,10 +17,10 @@ public:
 	glApp(const char* title, int width, int height) : glApp(title, width, height, DEFAULT_GLMAJOR, DEFAULT_GLMINOR) {}
 	glApp(const char* title, int width, int height, int glMajor, int glMinor);
 	virtual ~glApp();
-public:
-	GLFWwindow* GetWindow() { return window; }
+protected:
+	virtual void OnLoop(float deltaSecond) = 0;
 public:
 	virtual void Startup() = 0;
-	virtual void Loop() = 0;
 	virtual void Cleanup() = 0;
+	void Loop();
 };

@@ -19,3 +19,14 @@ glApp::~glApp()
 	window = nullptr;
 	glfwTerminate();
 }
+
+void glApp::Loop()
+{
+	while (glfwWindowShouldClose(window) == 0)
+	{
+		OnLoop(0.0f);
+
+		glfwSwapBuffers(window);
+		glfwPollEvents();
+	}
+}

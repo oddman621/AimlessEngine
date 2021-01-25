@@ -6,8 +6,9 @@
 
 class Triangle : public glApp
 {
+protected:
+	void OnLoop(float deltaSecond) override;
 public:
-	void Startup();
-	void Loop();
-	void Cleanup();
+	void Startup() override;
+	void Cleanup() override;
 };

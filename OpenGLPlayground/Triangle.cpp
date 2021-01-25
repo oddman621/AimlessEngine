@@ -17,18 +17,12 @@ void Triangle::Startup()
 	glBindVertexArray(vao);
 }
 
-void Triangle::Loop()
+void Triangle::OnLoop(float deltaSecond)
 {
-	while (glfwWindowShouldClose(GetWindow()) == 0)
-	{
-		const GLfloat color[4] = { 0.1f, 0.1f, 0.1f, 1.0f };
-		glClearBufferfv(GL_COLOR, 0, color);
-		glUseProgram(sp->Get());
-		glDrawArrays(GL_TRIANGLES, 0, 3);
-
-		glfwSwapBuffers(GetWindow());
-		glfwPollEvents();
-	}
+	const GLfloat color[4] = { 0.1f, 0.1f, 0.1f, 1.0f };
+	glClearBufferfv(GL_COLOR, 0, color);
+	glUseProgram(sp->Get());
+	glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
 void Triangle::Cleanup()
