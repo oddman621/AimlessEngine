@@ -24,3 +24,13 @@ public:
 	virtual void Cleanup() = 0;
 	void Loop();
 };
+
+#define GLAPP(CLASS) \
+class CLASS : public glApp \
+{\
+protected:\
+	void OnLoop(float deltaSecond) override;\
+public:\
+	void Startup() override;\
+	void Cleanup() override;\
+};
