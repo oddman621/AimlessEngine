@@ -8,11 +8,17 @@ class glApp
 private:
 	static bool init;
 	static int appCount;
+	const char* const DEFAULT_TITLE = "glApp";
+	const int DEFAULT_WIDTH = 1280;
+	const int DEFAULT_HEIGHT = 720;
+	const int DEFAULT_GLMAJOR = 4;
+	const int DEFAULT_GLMINOR = 6;
 protected:
 	GLFWwindow* window;
 public:
-	glApp(const char* title) : glApp(title, 1280, 720, 4, 6) {}
-	glApp(const char* title, int width, int height) : glApp(title, width, height, 4, 6) {}
+	glApp() : glApp(DEFAULT_TITLE, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_GLMAJOR, DEFAULT_GLMINOR) {}
+	glApp(const char* title) : glApp(title, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_GLMAJOR, DEFAULT_GLMINOR) {}
+	glApp(const char* title, int width, int height) : glApp(title, width, height, DEFAULT_GLMAJOR, DEFAULT_GLMINOR) {}
 	glApp(const char* title, int width, int height, int glMajor, int glMinor)
 	{
 		if (!init)
@@ -23,7 +29,7 @@ public:
 		window = EngineHelper::CreateWindow(title, width, height, glMajor, glMinor);
 		appCount += 1;
 	}
-	~glApp()
+	virtual ~glApp()
 	{
 		glfwDestroyWindow(window);
 		appCount -= 1;
