@@ -1,5 +1,4 @@
 #include "glApp.h"
-#include <GLFW/glfw3.h>
 #include <Engine.h>
 
 bool glApp::glfw_initialized = false;
