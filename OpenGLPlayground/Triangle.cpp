@@ -6,7 +6,7 @@
 ShaderProgram* sp;
 GLuint vao;
 
-void Triangle::Startup()
+STARTUP(Triangle)
 {
 	sp = new ShaderProgram();
 	sp->AddShader("shaders/Triangle.vert");
@@ -17,7 +17,7 @@ void Triangle::Startup()
 	glBindVertexArray(vao);
 }
 
-void Triangle::OnLoop(float deltaSecond)
+ONLOOP(Triangle)
 {
 	const GLfloat color[4] = { 0.1f, 0.1f, 0.1f, 1.0f };
 	glClearBufferfv(GL_COLOR, 0, color);
@@ -25,7 +25,7 @@ void Triangle::OnLoop(float deltaSecond)
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
-void Triangle::Cleanup()
+CLEANUP(Triangle)
 {
 	glDeleteVertexArrays(1, &vao);
 	delete sp;

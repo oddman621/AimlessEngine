@@ -34,3 +34,7 @@ public:\
 	void Startup() override;\
 	void Cleanup() override;\
 };
+
+#define STARTUP(CLASS) void CLASS::Startup()
+#define ONLOOP(CLASS) void CLASS::OnLoop(float deltaSecond)
+#define CLEANUP(CLASS) void CLASS::Cleanup()
