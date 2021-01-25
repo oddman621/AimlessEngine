@@ -12,6 +12,7 @@ glApp::glApp(const char* title, int width, int height, int glMajor, int glMinor)
 		glfwInit();
 		glfw_initialized = true;
 	}
+	glfwSetErrorCallback(EngineHelper::glfwErrorCallback);
 
 	window = EngineHelper::CreateWindow(title, width, height, glMajor, glMinor);
 	appCount += 1;
