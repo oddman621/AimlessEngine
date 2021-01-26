@@ -148,8 +148,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Apps\Triangle.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine\Engine.vcxproj">
@@ -161,7 +161,7 @@
     <None Include="shaders\Triangle.vert" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Apps.h" />
+    <ClInclude Include="Apps\Apps.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

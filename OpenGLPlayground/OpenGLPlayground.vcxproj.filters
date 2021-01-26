@@ -19,6 +19,9 @@
     <Filter Include="소스 파일\Apps">
       <UniqueIdentifier>{e72dc406-8883-44ef-86a3-530fc53fb31e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\Apps">
+      <UniqueIdentifier>{ee806b21-a072-4273-8a05-6671a785c586}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\Triangle.frag">
@@ -32,13 +35,13 @@
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Triangle.cpp">
+    <ClCompile Include="Apps\Triangle.cpp">
       <Filter>소스 파일\Apps</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Apps.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="Apps\Apps.h">
+      <Filter>헤더 파일\Apps</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
