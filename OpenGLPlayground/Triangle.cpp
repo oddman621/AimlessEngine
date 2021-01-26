@@ -2,7 +2,7 @@
 #include <GLFW/glfw3.h>
 #include <ShaderProgram.h>
 
-#include "Application.h"
+#include "Apps.h"
 
 
 AE::ShaderProgram* sp;
