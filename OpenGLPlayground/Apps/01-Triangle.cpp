@@ -5,8 +5,8 @@
 #include "Apps.h"
 
 
-AE::ShaderProgram* sp;
-GLuint vao;
+static AE::ShaderProgram* sp;
+static GLuint vao;
 
 STARTUP(Triangle)
 {

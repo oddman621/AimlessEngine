@@ -5,8 +5,8 @@
 #include "Apps.h"
 
 
-AE::ShaderProgram* sp;
-GLuint vao;
+static AE::ShaderProgram* sp;
+static GLuint vao;
 
 STARTUP(DataBetweenStage)
 {
@@ -19,11 +19,17 @@ STARTUP(DataBetweenStage)
 	glBindVertexArray(vao);
 }
 
+GLfloat elapsedTime = 0.0f;
 ONLOOP(DataBetweenStage)
 {
-	const GLfloat color[4] = { 0.1f, 0.1f, 0.1f, 1.0f };
-	glClearBufferfv(GL_COLOR, 0, color);
+	elapsedTime += deltaSecond;
+	const GLfloat clearColor[4] = { 0.1f, 0.1f, 0.1f, 1.0f };
+	glClearBufferfv(GL_COLOR, 0, clearColor);
 	glUseProgram(sp->Get());
+	glVertexAttrib4f(0, 
+		sinf(elapsedTime * 1.5f) * 0.45f, cosf(elapsedTime * 1.5f) * 0.45f, 0.0f, 0.0f);
+	glVertexAttrib4f(1, 0.1f, 0.9f, 0.5f, 1.0f);
+
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 

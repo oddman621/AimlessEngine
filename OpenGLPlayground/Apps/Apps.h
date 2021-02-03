@@ -2,7 +2,7 @@
 
 #include <glApp.h>
 
-#define GLAPP_CLASS Triangle
+#define GLAPP_CLASS DataBetweenStage
 
 GLAPP(Triangle)
 GLAPP(DataBetweenStage)
