@@ -41,10 +41,10 @@
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Apps\Triangle.cpp">
+    <ClCompile Include="Apps\01-Triangle.cpp">
       <Filter>소스 파일\Apps</Filter>
     </ClCompile>
-    <ClCompile Include="Apps\DataBetweenStage.cpp">
+    <ClCompile Include="Apps\02-DataBetweenStage.cpp">
       <Filter>소스 파일\Apps</Filter>
     </ClCompile>
   </ItemGroup>
