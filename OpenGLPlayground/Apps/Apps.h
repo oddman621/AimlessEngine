@@ -5,3 +5,4 @@
 #define GLAPP_CLASS Triangle
 
 GLAPP(Triangle)
+GLAPP(DataBetweenStage)

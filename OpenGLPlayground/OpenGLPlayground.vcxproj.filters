@@ -30,12 +30,21 @@
     <None Include="shaders\Triangle.vert">
       <Filter>shaders</Filter>
     </None>
+    <None Include="shaders\DataBetweenStage.vert">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\DataBetweenStage.frag">
+      <Filter>shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Apps\Triangle.cpp">
+      <Filter>소스 파일\Apps</Filter>
+    </ClCompile>
+    <ClCompile Include="Apps\DataBetweenStage.cpp">
       <Filter>소스 파일\Apps</Filter>
     </ClCompile>
   </ItemGroup>

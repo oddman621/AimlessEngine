@@ -148,6 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Apps\DataBetweenStage.cpp" />
     <ClCompile Include="Apps\Triangle.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -157,6 +158,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="shaders\DataBetweenStage.frag" />
+    <None Include="shaders\DataBetweenStage.vert" />
     <None Include="shaders\Triangle.frag" />
     <None Include="shaders\Triangle.vert" />
   </ItemGroup>
