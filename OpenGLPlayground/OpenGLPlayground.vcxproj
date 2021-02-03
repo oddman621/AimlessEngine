@@ -148,8 +148,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Apps\DataBetweenStage.cpp" />
-    <ClCompile Include="Apps\Triangle.cpp" />
+    <ClCompile Include="Apps\02-DataBetweenStage.cpp" />
+    <ClCompile Include="Apps\01-Triangle.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
