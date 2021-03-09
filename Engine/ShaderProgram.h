@@ -31,8 +31,6 @@ namespace AE
 			return program;
 		}
 	protected:
-		std::string GetShaderLog(GLuint shader);
-		std::string GetProgramLog(GLuint program);
 		void ClearShader();
 		void RemoveProgram();
 		void AddShader(const char* file, GLenum type);
@@ -43,11 +41,24 @@ namespace AE
 
 
 	/// <summary>
-	/// functions below are internal and complicate. doesn't need to know.
+	/// functions related to log.
 	/// </summary>
+	
+	// internal function
 	private:
 		static std::string helper_GetLog(GLuint object,
 			void (*GLGetLogLengthFunc)(GLuint, GLuint, GLint*),
 			void (*GLGetLogFunc)(GLuint, GLint, GLsizei*, GLchar*));
+
+	// external function
+	protected:
+		std::string (*GetShaderLog)(GLuint shader) =
+			[](GLuint object) -> std::string {
+			return helper_GetLog(object, glGetShaderiv, glGetShaderInfoLog);
+		};
+		std::string (*GetProgramLog)(GLuint program) =
+			[](GLuint object) -> std::string {
+			return helper_GetLog(object, glGetProgramiv, glGetProgramInfoLog);
+		};
 	};
 }

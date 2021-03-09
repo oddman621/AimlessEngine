@@ -24,30 +24,6 @@ namespace AE
 		return log;
 	}
 
-	string ShaderProgram::GetShaderLog(GLuint shader)
-	{
-		//string log;
-		//GLint log_length;
-		//glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_length);
-		//log.resize(log_length);
-
-		//glGetShaderInfoLog(shader, log_length, NULL, log.data());
-		//if (log_length) log.append("\n");
-		//return log;
-		return helper_GetLog(shader, glGetShaderiv, glGetShaderInfoLog);
-	}
-	string ShaderProgram::GetProgramLog(GLuint program)
-	{
-		//string log;
-		//GLint log_length;
-		//glGetProgramiv(program, GL_INFO_LOG_LENGTH, &log_length);
-		//log.resize(log_length);
-
-		//glGetProgramInfoLog(program, log_length, NULL, log.data());
-		//if (log_length) log.append("\n");
-		//return log;
-		return helper_GetLog(program, glGetProgramiv, glGetProgramInfoLog);
-	}
 	void ShaderProgram::ClearShader()
 	{
 		for (GLuint shader : shaders)
