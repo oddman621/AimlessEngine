@@ -30,7 +30,6 @@ namespace AE
 		{
 			return program;
 		}
-
 	protected:
 		std::string GetShaderLog(GLuint shader);
 		std::string GetProgramLog(GLuint program);
@@ -41,5 +40,14 @@ namespace AE
 	public:
 		void AddShader(const char* file);
 		void Compile();
+
+
+	/// <summary>
+	/// functions below are internal and complicate. doesn't need to know.
+	/// </summary>
+	private:
+		static std::string helper_GetLog(GLuint object,
+			void (*GLGetLogLengthFunc)(GLuint, GLuint, GLint*),
+			void (*GLGetLogFunc)(GLuint, GLint, GLsizei*, GLchar*));
 	};
 }
